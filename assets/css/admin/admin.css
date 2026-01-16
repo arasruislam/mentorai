@@ -1,0 +1,128 @@
+/* Mentorai Admin UI (scoped) */
+.mentorai-admin{
+  --m-lav: #C8ACD6;
+  --m-ind: #433D8B;
+  --m-dep: #2E236C;
+  --m-nit: #17153B;
+  --m-w: #fff;
+
+  color: var(--m-nit);
+}
+
+/* Hero */
+.mentorai-admin .mentorai-hero{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  background: linear-gradient(135deg, var(--m-nit), var(--m-dep));
+  border-radius:16px;
+  padding:18px 20px;
+  color: var(--m-w);
+  box-shadow: 0 8px 24px rgba(23,21,59,.18);
+  margin: 10px 0 14px;
+}
+.mentorai-admin .mentorai-hero h1{
+  margin:0 0 6px;
+  color: var(--m-w);
+}
+.mentorai-admin .mentorai-hero__sub{
+  margin:0;
+  color: rgba(255,255,255,.85);
+}
+.mentorai-admin .mentorai-badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background: rgba(200,172,214,.16);
+  border: 1px solid rgba(200,172,214,.28);
+  color: var(--m-lav);
+  font-weight:600;
+}
+
+/* Tabs spacing */
+.mentorai-admin .mentorai-tabs{
+  margin-top: 4px;
+}
+
+/* Grid cards */
+.mentorai-admin .mentorai-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+@media (max-width: 1200px){
+  .mentorai-admin .mentorai-grid{ grid-template-columns: 1fr; }
+}
+.mentorai-admin .mentorai-card{
+  background: var(--m-w);
+  border: 1px solid rgba(46,35,108,.12);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 16px rgba(23,21,59,.06);
+}
+.mentorai-admin .mentorai-card__label{
+  font-size: 12px;
+  letter-spacing: .02em;
+  color: rgba(23,21,59,.65);
+  margin-bottom: 6px;
+}
+.mentorai-admin .mentorai-card__value{
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--m-dep);
+}
+
+/* Sections */
+.mentorai-admin .mentorai-section{
+  margin-top: 16px;
+}
+.mentorai-admin .mentorai-h2{
+  margin: 0 0 10px;
+}
+.mentorai-admin .mentorai-panel{
+  background: var(--m-w);
+  border: 1px solid rgba(46,35,108,.12);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+/* Actions */
+.mentorai-admin .mentorai-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom: 10px;
+}
+.mentorai-admin .mentorai-btn{
+  display:inline-block;
+  background: var(--m-ind);
+  color: var(--m-w);
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  text-decoration:none;
+  font-weight: 600;
+}
+.mentorai-admin .mentorai-btn:hover{
+  background: var(--m-dep);
+  color: var(--m-w);
+}
+.mentorai-admin .mentorai-btn--ghost{
+  background: transparent;
+  color: var(--m-dep);
+  border: 1px solid rgba(46,35,108,.20);
+}
+.mentorai-admin .mentorai-btn--ghost:hover{
+  background: rgba(200,172,214,.16);
+  color: var(--m-dep);
+}
+.mentorai-admin .mentorai-note{
+  margin: 0;
+  color: rgba(23,21,59,.70);
+}
+.mentorai-admin .mentorai-muted{
+  margin: 0;
+  color: rgba(23,21,59,.72);
+}

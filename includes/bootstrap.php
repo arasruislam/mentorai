@@ -46,6 +46,10 @@ final class Bootstrap {
 		require_once MENTORAI_PATH . 'includes/managers/categories-manager.php';
 		require_once MENTORAI_PATH . 'includes/managers/assets-manager.php';
 		require_once MENTORAI_PATH . 'includes/managers/widgets-manager.php';
+    // Post Type
+    require_once MENTORAI_PATH . 'includes/managers/cpt-manager.php';
+    require_once MENTORAI_PATH . 'includes/managers/admin-pages-manager.php';
+
 
 		// Shared base widget (Elementor classes should exist now)
 		require_once MENTORAI_PATH . 'includes/widgets/_shared/base-widget.php';
