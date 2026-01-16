@@ -15,7 +15,7 @@ final class Categories_Manager {
 		$elements_manager->add_category(
 			self::CATEGORY_SLUG,
 			[
-				'title' => __( 'MentorAI Widgets', 'mentorai' ),
+				'title' => __( 'Mentorai', 'mentorai' ),
 				'icon'  => 'fa fa-plug',
 			]
 		);
