@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: MentorAI
+ * Plugin Name: Mentorai
  * Description: Custom Elementor widget library.
  * Version: 0.1.0
- * Author: MentorAI
+ * Author: Mentorai
  * Text Domain: mentorai
  */
 
@@ -16,4 +16,4 @@ define( 'MENTORAI_URL', plugin_dir_url( __FILE__ ) );
 
 require_once MENTORAI_PATH . 'includes/bootstrap.php';
 
-MentorAI\Bootstrap::init();
+Mentorai\Bootstrap::init();

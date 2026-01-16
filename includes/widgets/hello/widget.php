@@ -1,7 +1,7 @@
 <?php
-namespace MentorAI\Widgets\Hello;
+namespace Mentorai\Widgets\Hello;
 
-use MentorAI\Widgets\Shared\Base_Widget;
+use Mentorai\Widgets\Shared\Base_Widget;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }

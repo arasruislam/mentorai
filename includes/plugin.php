@@ -1,9 +1,9 @@
 <?php
-namespace MentorAI;
+namespace Mentorai;
 
-use MentorAI\Managers\Widgets_Manager;
-use MentorAI\Managers\Categories_Manager;
-use MentorAI\Managers\Assets_Manager;
+use Mentorai\Managers\Widgets_Manager;
+use Mentorai\Managers\Categories_Manager;
+use Mentorai\Managers\Assets_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
