@@ -24,11 +24,11 @@ final class CPT_Manager {
 		$args = [
 			'labels'              => $labels,
 			'public'              => false,
-			'show_ui'             => true,
+			'show_ui'             => false,
 			'show_in_menu'        => true,
 			'menu_position'       => 58,
 			'menu_icon'           => 'dashicons-lightbulb', // you can change later
-			'supports'            => [ 'title' ],
+			'supports'            => [ ],
 			'has_archive'         => false,
 			'exclude_from_search' => true,
 			'publicly_queryable'  => false,

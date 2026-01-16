@@ -47,7 +47,7 @@ final class Bootstrap {
 		require_once MENTORAI_PATH . 'includes/managers/assets-manager.php';
 		require_once MENTORAI_PATH . 'includes/managers/widgets-manager.php';
     // Post Type
-    require_once MENTORAI_PATH . 'includes/managers/cpt-manager.php';
+    // require_once MENTORAI_PATH . 'includes/managers/cpt-manager.php';
     require_once MENTORAI_PATH . 'includes/managers/admin-pages-manager.php';
 
 

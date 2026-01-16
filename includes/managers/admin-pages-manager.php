@@ -12,21 +12,46 @@ final class Admin_Pages_Manager {
 	}
 
 	public function register_pages(): void {
-		$parent = 'edit.php?post_type=' . CPT_Manager::POST_TYPE;
-		$cap    = 'manage_options';
+	$cap = 'manage_options';
 
-		add_submenu_page(
-			$parent,
-			__( 'Dashboard', 'mentorai' ),
-			__( 'Dashboard', 'mentorai' ),
-			$cap,
-			self::PAGE_SLUG,
-			[ $this, 'render_router' ]
-		);
+	add_menu_page(
+		__( 'Mentorai', 'mentorai' ),          // page title
+		__( 'Mentorai', 'mentorai' ),          // menu title
+		$cap,
+		'mentorai-dashboard',                  // menu slug
+		[ $this, 'render_router' ],
+		'dashicons-lightbulb',                 // icon (or custom SVG later)
+		58
+	);
 
-		// Optional: keep menu clean (no extra submenu items).
-		// If you *want* visible submenu items too, tell me—I'll add them.
-	}
+	add_submenu_page(
+		'mentorai-dashboard',
+		__( 'Dashboard', 'mentorai' ),
+		__( 'Dashboard', 'mentorai' ),
+		$cap,
+		'mentorai-dashboard',
+		[ $this, 'render_router' ]
+	);
+
+	add_submenu_page(
+		'mentorai-dashboard',
+		__( 'Settings', 'mentorai' ),
+		__( 'Settings', 'mentorai' ),
+		$cap,
+		'mentorai-dashboard&tab=settings',
+		[ $this, 'render_router' ]
+	);
+
+	add_submenu_page(
+		'mentorai-dashboard',
+		__( 'Licences', 'mentorai' ),
+		__( 'Licences', 'mentorai' ),
+		$cap,
+		'mentorai-dashboard&tab=licences',
+		[ $this, 'render_router' ]
+	);
+}
+
 
 	public function render_router(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {

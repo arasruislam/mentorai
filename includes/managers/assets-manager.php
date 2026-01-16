@@ -13,14 +13,11 @@ final class Assets_Manager {
 	}
 
 	public function enqueue_admin_assets( string $hook ): void {
-		// Only load on Mentorai CPT and Mentorai pages
-		$post_type = isset( $_GET['post_type'] ) ? (string) $_GET['post_type'] : ''; // phpcs:ignore
-		$page      = isset( $_GET['page'] ) ? (string) $_GET['page'] : ''; // phpcs:ignore
+		// Only load on Mentorai admin pages (add_menu_page / add_submenu_page)
+		$page = isset( $_GET['page'] ) ? (string) $_GET['page'] : ''; // phpcs:ignore
 
-		$is_mentorai_cpt  = ( $post_type === CPT_Manager::POST_TYPE );
-		$is_mentorai_page = ( 0 === strpos( $page, 'mentorai-' ) );
-
-		if ( ! $is_mentorai_cpt && ! $is_mentorai_page ) {
+		// Our pages: mentorai-dashboard, mentorai-*
+		if ( 0 !== strpos( $page, 'mentorai-' ) ) {
 			return;
 		}
 
@@ -33,10 +30,21 @@ final class Assets_Manager {
 	}
 
 	public function enqueue_editor_styles(): void {
-		wp_enqueue_style( 'mentorai-editor', MENTORAI_URL . 'assets/css/editor/editor.css', [], MENTORAI_VERSION );
+		wp_enqueue_style(
+			'mentorai-editor',
+			MENTORAI_URL . 'assets/css/editor/editor.css',
+			[],
+			MENTORAI_VERSION
+		);
 	}
 
 	public function enqueue_editor_scripts(): void {
-		wp_enqueue_script( 'mentorai-editor', MENTORAI_URL . 'assets/js/editor/editor.js', [ 'jquery' ], MENTORAI_VERSION, true );
+		wp_enqueue_script(
+			'mentorai-editor',
+			MENTORAI_URL . 'assets/js/editor/editor.js',
+			[ 'jquery' ],
+			MENTORAI_VERSION,
+			true
+		);
 	}
 }

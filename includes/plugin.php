@@ -29,18 +29,20 @@ final class Plugin {
 	private function __construct() {}
 
 	public function init(): void {
-		$this->cpt        = new CPT_Manager();
+		// $this->cpt        = new CPT_Manager();
+    // $this->cpt->init();
+
 		$this->admin_pages = new Admin_Pages_Manager();
+    $this->admin_pages->init();
 
 		$this->categories = new Categories_Manager();
+    $this->categories->init();
+
 		$this->assets     = new Assets_Manager();
+    $this->assets->init();
+
 		$this->widgets    = new Widgets_Manager();
+    $this->widgets->init();
 
-		$this->cpt->init();
-		$this->admin_pages->init();
-
-		$this->categories->init();
-		$this->assets->init();
-		$this->widgets->init();
 	}
 }
