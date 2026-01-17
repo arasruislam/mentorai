@@ -12,46 +12,47 @@ final class Admin_Pages_Manager {
 	}
 
 	public function register_pages(): void {
-	$cap = 'manage_options';
+		$cap = 'manage_options';
 
-	add_menu_page(
-		__( 'Mentorai', 'mentorai' ),          // page title
-		__( 'Mentorai', 'mentorai' ),          // menu title
-		$cap,
-		'mentorai-dashboard',                  // menu slug
-		[ $this, 'render_router' ],
-		'dashicons-lightbulb',                 // icon (or custom SVG later)
-		58
-	);
+		// Top-level menu
+		add_menu_page(
+			__( 'Mentorai', 'mentorai' ),
+			__( 'Mentorai', 'mentorai' ),
+			$cap,
+			self::PAGE_SLUG,
+			[ $this, 'render_router' ],
+			'dashicons-lightbulb',
+			58
+		);
 
-	add_submenu_page(
-		'mentorai-dashboard',
-		__( 'Dashboard', 'mentorai' ),
-		__( 'Dashboard', 'mentorai' ),
-		$cap,
-		'mentorai-dashboard',
-		[ $this, 'render_router' ]
-	);
+		// Submenus (optional but requested)
+		add_submenu_page(
+			self::PAGE_SLUG,
+			__( 'Dashboard', 'mentorai' ),
+			__( 'Dashboard', 'mentorai' ),
+			$cap,
+			self::PAGE_SLUG,
+			[ $this, 'render_router' ]
+		);
 
-	add_submenu_page(
-		'mentorai-dashboard',
-		__( 'Settings', 'mentorai' ),
-		__( 'Settings', 'mentorai' ),
-		$cap,
-		'mentorai-dashboard&tab=settings',
-		[ $this, 'render_router' ]
-	);
+		add_submenu_page(
+			self::PAGE_SLUG,
+			__( 'Settings', 'mentorai' ),
+			__( 'Settings', 'mentorai' ),
+			$cap,
+			self::PAGE_SLUG . '&tab=settings',
+			[ $this, 'render_router' ]
+		);
 
-	add_submenu_page(
-		'mentorai-dashboard',
-		__( 'Licences', 'mentorai' ),
-		__( 'Licences', 'mentorai' ),
-		$cap,
-		'mentorai-dashboard&tab=licences',
-		[ $this, 'render_router' ]
-	);
-}
-
+		add_submenu_page(
+			self::PAGE_SLUG,
+			__( 'Licences', 'mentorai' ),
+			__( 'Licences', 'mentorai' ),
+			$cap,
+			self::PAGE_SLUG . '&tab=licences',
+			[ $this, 'render_router' ]
+		);
+	}
 
 	public function render_router(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -72,14 +73,16 @@ final class Admin_Pages_Manager {
 
 		echo '<div class="wrap mentorai-admin">';
 
-		// Header / Hero
+		// Hero
 		echo '<div class="mentorai-hero">';
 		echo '<div class="mentorai-hero__left">';
 		echo '<h1>' . esc_html__( 'Mentorai', 'mentorai' ) . '</h1>';
 		echo '<p class="mentorai-hero__sub">' . esc_html__( 'Admin panel for widgets, settings and licences (demo UI).', 'mentorai' ) . '</p>';
 		echo '</div>';
+
+		$status_badge = ( did_action( 'elementor/loaded' ) ) ? __( 'Status: Active', 'mentorai' ) : __( 'Status: Elementor Missing', 'mentorai' );
 		echo '<div class="mentorai-hero__right">';
-		echo '<span class="mentorai-badge">' . esc_html__( 'Status: Active', 'mentorai' ) . '</span>';
+		echo '<span class="mentorai-badge">' . esc_html( $status_badge ) . '</span>';
 		echo '</div>';
 		echo '</div>';
 
@@ -92,49 +95,39 @@ final class Admin_Pages_Manager {
 		}
 		echo '</h2>';
 
-		// Tab content
-		switch ( $tab ) {
-			case 'settings':
-				$this->render_settings();
-				break;
-			case 'licences':
-				$this->render_licences();
-				break;
-			case 'dashboard':
-			default:
-				$this->render_dashboard();
-				break;
+		// Content
+		if ( 'settings' === $tab ) {
+			$this->render_settings();
+		} elseif ( 'licences' === $tab ) {
+			$this->render_licences();
+		} else {
+			$this->render_dashboard();
 		}
 
 		echo '</div>';
 	}
 
 	private function render_dashboard(): void {
-		$widgets_count = $this->get_registered_widgets_count();
+		$widgets_count = $this->get_mentorai_widgets_count();
 		$version       = defined( 'MENTORAI_VERSION' ) ? MENTORAI_VERSION : '—';
 		$status        = ( did_action( 'elementor/loaded' ) ) ? __( 'Elementor Connected', 'mentorai' ) : __( 'Elementor Missing', 'mentorai' );
 
-		// Stats
 		echo '<div class="mentorai-grid">';
 		echo $this->card( __( 'Widgets Count', 'mentorai' ), (string) $widgets_count );
 		echo $this->card( __( 'Mentorai Version', 'mentorai' ), (string) $version );
 		echo $this->card( __( 'System Status', 'mentorai' ), (string) $status );
 		echo '</div>';
 
-		// Quick actions
 		echo '<div class="mentorai-section">';
 		echo '<h2 class="mentorai-h2">' . esc_html__( 'Quick Actions', 'mentorai' ) . '</h2>';
-
 		echo '<div class="mentorai-actions">';
 		echo '<a class="mentorai-btn" href="' . esc_url( $this->action_url( 'scaffold' ) ) . '">' . esc_html__( 'Create Widget Scaffold (Demo)', 'mentorai' ) . '</a>';
 		echo '<a class="mentorai-btn mentorai-btn--ghost" target="_blank" rel="noopener" href="' . esc_url( $this->docs_url() ) . '">' . esc_html__( 'Docs', 'mentorai' ) . '</a>';
 		echo '<a class="mentorai-btn mentorai-btn--ghost" target="_blank" rel="noopener" href="' . esc_url( $this->support_url() ) . '">' . esc_html__( 'Support', 'mentorai' ) . '</a>';
 		echo '</div>';
-
-		echo '<p class="mentorai-note">' . esc_html__( 'Next: Wire this button to generate a widget folder + boilerplate files automatically.', 'mentorai' ) . '</p>';
+		echo '<p class="mentorai-note">' . esc_html__( 'Next: implement real scaffold generation using WP_Filesystem.', 'mentorai' ) . '</p>';
 		echo '</div>';
 
-		// Handle demo action (no file write yet — safe)
 		$this->handle_actions();
 	}
 
@@ -142,7 +135,7 @@ final class Admin_Pages_Manager {
 		echo '<div class="mentorai-section">';
 		echo '<h2 class="mentorai-h2">' . esc_html__( 'Settings', 'mentorai' ) . '</h2>';
 		echo '<div class="mentorai-panel">';
-		echo '<p class="mentorai-muted">' . esc_html__( 'Settings UI placeholder. Next step: implement Settings API fields (toggles, API keys, defaults).', 'mentorai' ) . '</p>';
+		echo '<p class="mentorai-muted">' . esc_html__( 'Settings UI placeholder. Next: Settings API fields (toggles, defaults).', 'mentorai' ) . '</p>';
 		echo '</div>';
 		echo '</div>';
 	}
@@ -151,23 +144,23 @@ final class Admin_Pages_Manager {
 		echo '<div class="mentorai-section">';
 		echo '<h2 class="mentorai-h2">' . esc_html__( 'Licences', 'mentorai' ) . '</h2>';
 		echo '<div class="mentorai-panel">';
-		echo '<p class="mentorai-muted">' . esc_html__( 'Licence UI placeholder. Next step: key input + activation status + server validation flow.', 'mentorai' ) . '</p>';
+		echo '<p class="mentorai-muted">' . esc_html__( 'Licences UI placeholder. Next: key input + activation status.', 'mentorai' ) . '</p>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	private function get_registered_widgets_count(): int {
-		// Safe: count widgets registered in Elementor
+	private function get_mentorai_widgets_count(): int {
 		if ( ! did_action( 'elementor/loaded' ) || ! class_exists( '\\Elementor\\Plugin' ) ) {
 			return 0;
 		}
 
 		try {
 			$manager = \Elementor\Plugin::instance()->widgets_manager;
+
 			if ( method_exists( $manager, 'get_widget_types' ) ) {
-				$all = $manager->get_widget_types();
-				// Optionally filter Mentorai widgets by prefix 'mentorai-'
+				$all   = $manager->get_widget_types();
 				$count = 0;
+
 				foreach ( $all as $w ) {
 					if ( method_exists( $w, 'get_name' ) ) {
 						$name = (string) $w->get_name();
@@ -176,6 +169,7 @@ final class Admin_Pages_Manager {
 						}
 					}
 				}
+
 				return $count;
 			}
 		} catch ( \Throwable $e ) {
@@ -196,11 +190,10 @@ final class Admin_Pages_Manager {
 	private function tab_url( string $tab ): string {
 		return add_query_arg(
 			[
-				'post_type' => CPT_Manager::POST_TYPE,
-				'page'      => self::PAGE_SLUG,
-				'tab'       => $tab,
+				'page' => self::PAGE_SLUG,
+				'tab'  => $tab,
 			],
-			admin_url( 'edit.php' )
+			admin_url( 'admin.php' )
 		);
 	}
 
@@ -219,23 +212,20 @@ final class Admin_Pages_Manager {
 		}
 
 		$action = sanitize_key( (string) $_GET['mentorai_action'] ); // phpcs:ignore
-
 		check_admin_referer( 'mentorai_action_' . $action );
 
 		if ( 'scaffold' === $action ) {
 			echo '<div class="notice notice-success is-dismissible"><p><strong>' .
-				esc_html__( 'Demo: Widget scaffold action triggered. Next step is generating files safely.', 'mentorai' ) .
+				esc_html__( 'Demo: Widget scaffold action triggered.', 'mentorai' ) .
 			'</strong></p></div>';
 		}
 	}
 
 	private function docs_url(): string {
-		// Replace with your repo docs later
 		return 'https://example.com/mentorai-docs';
 	}
 
 	private function support_url(): string {
-		// Replace with your support link later
 		return 'https://example.com/mentorai-support';
 	}
 }
