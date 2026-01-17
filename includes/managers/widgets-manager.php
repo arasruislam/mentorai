@@ -17,13 +17,29 @@ final class Widgets_Manager {
 	}
 
 	public function register_widgets( Elementor_Widgets_Manager $widgets_manager ): void {
-		$this->register_breadcrumb( $widgets_manager );
-	}
 
-	private function register_breadcrumb( Elementor_Widgets_Manager $widgets_manager ): void {
-		require_once MENTORAI_PATH . 'includes/widgets/breadcrumb/widget.php';
-		require_once MENTORAI_PATH . 'includes/widgets/breadcrumb/controls.php';
+		$all_widgets = Widgets_Registry::all();
 
-		$widgets_manager->register( new \Mentorai\Widgets\Breadcrumb\Widget() );
+		foreach ( $all_widgets as $slug => $meta ) {
+
+			// ✅ Respect Settings toggle
+			if ( ! Widgets_Settings::is_enabled( $slug ) ) {
+				continue;
+			}
+
+			// Load required files
+			if ( ! empty( $meta['file'] ) && file_exists( $meta['file'] ) ) {
+				require_once $meta['file'];
+			}
+
+			if ( ! empty( $meta['controls'] ) && file_exists( $meta['controls'] ) ) {
+				require_once $meta['controls'];
+			}
+
+			$class = $meta['class'] ?? '';
+			if ( $class && class_exists( $class ) ) {
+				$widgets_manager->register( new $class() );
+			}
+		}
 	}
 }

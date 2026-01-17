@@ -1,10 +1,15 @@
 <?php
 namespace Mentorai\Widgets\Shared;
 
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
+// ✅ Safety: if Elementor is not loaded yet, do not fatal
+if ( ! class_exists( '\Elementor\Widget_Base' ) ) {
+	return;
+}
+
 use Elementor\Widget_Base;
 use Mentorai\Managers\Categories_Manager;
-
-if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 abstract class Base_Widget extends Widget_Base {
 
@@ -13,11 +18,11 @@ abstract class Base_Widget extends Widget_Base {
 	}
 
 	/**
-	 * ✅ Add a unique icon marker class for Mentorai widgets
-	 * So we can target widget tiles in Elementor panel using CSS.
+	 * Optional default icon for widgets that don't override get_icon().
+	 * NOTE: Elementor expects a single icon class here.
+	 * Adding extra classes here is not reliable for "badge" in the panel.
 	 */
 	public function get_icon(): string {
-		// Your child widgets can still override, but if they don't, this applies.
 		return 'eicon-star mentorai-panel-badge';
 	}
 }

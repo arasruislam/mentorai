@@ -1,4 +1,25 @@
-/* Base layout (required for controls like gap/alignment) */
+/* =========================================================
+   Mentorai Breadcrumb - Pro Presets (admin-safe, modern)
+   Works with Elementor controls (colors/typography/background)
+   ========================================================= */
+
+/* Base */
+.mentorai-bc {
+  --bc-radius: 14px;
+  --bc-pad-y: 10px;
+  --bc-pad-x: 14px;
+
+  --bc-link: inherit;
+  --bc-link-hover: inherit;
+  --bc-current: inherit;
+  --bc-sep: currentColor;
+
+  --bc-gap: 10px;
+  --bc-sep-opacity: 0.55;
+
+  display: block;
+}
+
 .mentorai-bc__list {
   display: flex;
   align-items: center;
@@ -6,98 +27,221 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  gap: var(--bc-gap);
 }
+
 .mentorai-bc__item,
 .mentorai-bc__sep {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-/* Preset: Minimal */
-.mentorai-bc--preset-minimal .mentorai-bc__sep {
-  opacity: 0.55;
+.mentorai-bc__link {
+  color: var(--bc-link);
+  text-decoration: none;
+  transition:
+    color 0.18s ease,
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
 
-/* Preset: Pill */
-.mentorai-bc--preset-pill {
-  background: rgba(200, 172, 214, 0.18);
-  border: 1px solid rgba(67, 61, 139, 0.18);
-  border-radius: 999px;
-  padding: 8px 12px;
-}
-.mentorai-bc--preset-pill .mentorai-bc__sep {
-  opacity: 0.6;
+.mentorai-bc__link:hover {
+  color: var(--bc-link-hover);
+  opacity: 0.92;
 }
 
-/* Preset: Underline */
-.mentorai-bc--preset-underline .mentorai-bc__link {
+.mentorai-bc__current {
+  color: var(--bc-current);
+  font-weight: 600;
+}
+
+.mentorai-bc__nolink {
+  opacity: 0.92;
+}
+
+.mentorai-bc__sep {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bc-sep);
+  opacity: var(--bc-sep-opacity);
+  line-height: 1;
+  transform: translateY(0.5px);
+}
+
+/* Icon rendering should follow currentColor */
+.mentorai-bc__sep svg,
+.mentorai-bc__sep svg * {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.mentorai-bc__sep i {
+  color: currentColor;
+  line-height: 1;
+}
+
+/* Optional: container padding (Elementor can override via selectors) */
+.mentorai-bc {
+  padding: var(--bc-pad-y) var(--bc-pad-x);
+  border-radius: var(--bc-radius);
+}
+
+/* =========================================================
+   Preset 1: Minimal (clean, modern spacing + subtle hover)
+   ========================================================= */
+.mentorai-bc--preset-minimal {
+  --bc-gap: 10px;
+  --bc-sep-opacity: 0.55;
+  background: transparent;
+  border: 0;
+  padding: 0; /* minimal should feel lightweight */
+  border-radius: 0;
+}
+
+.mentorai-bc--preset-minimal .mentorai-bc__link:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* =========================================================
+   Preset 2: Pill (modern capsule with soft border)
+   ========================================================= */
+.mentorai-bc--preset-pill {
+  --bc-radius: 999px;
+  --bc-pad-y: 10px;
+  --bc-pad-x: 14px;
+  --bc-gap: 10px;
+  --bc-sep-opacity: 0.55;
+
+  background: rgba(200, 172, 214, 0.14);
+  border: 1px solid rgba(67, 61, 139, 0.18);
+  box-shadow: 0 10px 22px rgba(23, 21, 59, 0.08);
+}
+
+.mentorai-bc--preset-pill .mentorai-bc__link {
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.mentorai-bc--preset-pill .mentorai-bc__link:hover {
+  background: rgba(200, 172, 214, 0.18);
+}
+
+/* =========================================================
+   Preset 3: Underline (editorial, “premium” look)
+   ========================================================= */
+.mentorai-bc--preset-underline {
+  --bc-pad-y: 0;
+  --bc-pad-x: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  --bc-gap: 12px;
+  --bc-sep-opacity: 0.45;
+}
+
+.mentorai-bc--preset-underline .mentorai-bc__link {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.mentorai-bc--preset-underline .mentorai-bc__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+  opacity: 0.75;
+}
+
+.mentorai-bc--preset-underline .mentorai-bc__link:hover::after {
+  transform: scaleX(1);
+}
+
 .mentorai-bc--preset-underline .mentorai-bc__current {
   font-weight: 700;
 }
 
-/* Preset: Dark */
+/* =========================================================
+   Preset 4: Dark (sleek surface, neon-ish separators)
+   ========================================================= */
 .mentorai-bc--preset-dark {
-  background: #17153b;
-  color: #c8acd6;
-  border-radius: 14px;
-  padding: 10px 12px;
+  --bc-radius: 14px;
+  --bc-pad-y: 10px;
+  --bc-pad-x: 14px;
+  --bc-gap: 10px;
+  --bc-sep-opacity: 0.65;
+
+  background: linear-gradient(135deg, #17153b 0%, #2e236c 100%);
+  border: 1px solid rgba(200, 172, 214, 0.12);
+  box-shadow: 0 16px 32px rgba(23, 21, 59, 0.22);
+  color: rgba(200, 172, 214, 0.92);
 }
+
 .mentorai-bc--preset-dark .mentorai-bc__link {
-  color: #c8acd6;
+  color: rgba(200, 172, 214, 0.92);
 }
-.mentorai-bc--preset-dark .mentorai-bc__sep {
-  color: rgba(200, 172, 214, 0.7);
+
+.mentorai-bc--preset-dark .mentorai-bc__link:hover {
+  color: #ffffff;
 }
+
 .mentorai-bc--preset-dark .mentorai-bc__current {
   color: #ffffff;
 }
 
-/* Preset: Glass */
+/* =========================================================
+   Preset 5: Glass (modern translucent card)
+   ========================================================= */
 .mentorai-bc--preset-glass {
-  background: rgba(200, 172, 214, 0.14);
-  border: 1px solid rgba(46, 35, 108, 0.16);
-  border-radius: 16px;
-  padding: 10px 12px;
+  --bc-radius: 16px;
+  --bc-pad-y: 12px;
+  --bc-pad-x: 14px;
+  --bc-gap: 10px;
+  --bc-sep-opacity: 0.6;
+
+  background: rgba(200, 172, 214, 0.12);
+  border: 1px solid rgba(46, 35, 108, 0.18);
+  box-shadow: 0 18px 40px rgba(23, 21, 59, 0.14);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
-/* Separator rendering */
-.mentorai-bc__sep {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.mentorai-bc--preset-glass .mentorai-bc__link:hover {
+  transform: translateY(-1px);
 }
 
-/* ✅ scalable wrapper controlled by Elementor slider via CSS variable */
-.mentorai-bc__sep-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--mentorai-sep-size, 14px);
-  line-height: 1;
+/* =========================================================
+   Bonus Preset (Optional): Soft (neutral modern surface)
+   Add in controls if you want: 'soft' => 'Soft'
+   ========================================================= */
+.mentorai-bc--preset-soft {
+  --bc-radius: 14px;
+  --bc-pad-y: 12px;
+  --bc-pad-x: 14px;
+  --bc-gap: 10px;
+  --bc-sep-opacity: 0.55;
+
+  background: rgba(23, 21, 59, 0.04);
+  border: 1px solid rgba(23, 21, 59, 0.08);
+  box-shadow: 0 10px 20px rgba(23, 21, 59, 0.06);
 }
 
-/* FontAwesome */
-.mentorai-bc__sep-icon i {
-  font-size: 1em;
-  line-height: 1;
-  display: block;
-}
-
-/* SVG */
-.mentorai-bc__sep-icon svg {
-  width: 1em;
-  height: 1em;
-  display: block;
-}
-
-.mentorai-bc__sep svg {
-  fill: currentColor;
-  stroke: currentColor;
-}
-.mentorai-bc__sep svg * {
-  fill: currentColor;
-  stroke: currentColor;
+/* =========================================================
+   Responsive polish
+   ========================================================= */
+@media (max-width: 767px) {
+  .mentorai-bc {
+    --bc-gap: 8px;
+  }
+  .mentorai-bc--preset-pill .mentorai-bc__link {
+    padding: 3px 7px;
+  }
 }
