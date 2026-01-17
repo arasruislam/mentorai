@@ -31,12 +31,26 @@ final class Controls {
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'minimal',
 				'options' => [
-					'minimal'   => __( 'Minimal', 'mentorai' ),
-					'pill'      => __( 'Pill', 'mentorai' ),
-					'underline' => __( 'Underline', 'mentorai' ),
-					'dark'      => __( 'Dark', 'mentorai' ),
-					'glass'     => __( 'Glass', 'mentorai' ),
-				],
+          // Task UI presets (01–10)
+          '01-chevron'      => __( '01 — Chevron', 'mentorai' ),
+          '02-icons'        => __( '02 — Icon Trail', 'mentorai' ),
+          '03-compact'      => __( '03 — Compact', 'mentorai' ),
+          '04-slash'        => __( '04 — Slash', 'mentorai' ),
+          '05-steps'        => __( '05 — Steps (Line)', 'mentorai' ),
+          '06-steps-check'  => __( '06 — Steps (Check)', 'mentorai' ),
+          '07-dots'         => __( '07 — Dots Progress', 'mentorai' ),
+          '08-tabs'         => __( '08 — Tabs', 'mentorai' ),
+          '09-tabs-active'  => __( '09 — Tabs (Active Pill)', 'mentorai' ),
+          '10-pill-arrow'   => __( '10 — Pill Arrow', 'mentorai' ),
+
+          // Classic presets (modern)
+          'minimal'         => __( 'Classic — Minimal', 'mentorai' ),
+          'pill'            => __( 'Classic — Pill', 'mentorai' ),
+          'underline'       => __( 'Classic — Underline', 'mentorai' ),
+          'dark'            => __( 'Classic — Dark', 'mentorai' ),
+          'glass'           => __( 'Classic — Glass', 'mentorai' ),
+        ],
+
 			]
 		);
 
