@@ -6,7 +6,6 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Icons_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -15,7 +14,7 @@ final class Controls {
 	public static function register( $widget ): void {
 
 		/* -----------------------
-		 * Content Controls
+		 * Content
 		 * ----------------------*/
 		$widget->start_controls_section(
 			'section_content',
@@ -76,10 +75,10 @@ final class Controls {
 			[
 				'label'   => __( 'Separator Type', 'mentorai' ),
 				'type'    => Controls_Manager::SELECT,
-				'default' => 'text',
+				'default' => 'icon', // ✅ default icon
 				'options' => [
-					'text' => __( 'Text', 'mentorai' ),
 					'icon' => __( 'Icon', 'mentorai' ),
+					'text' => __( 'Text', 'mentorai' ),
 				],
 			]
 		);
@@ -126,18 +125,9 @@ final class Controls {
 				'label'     => __( 'Alignment', 'mentorai' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => [
-					'flex-start' => [
-						'title' => __( 'Left', 'mentorai' ),
-						'icon'  => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => __( 'Center', 'mentorai' ),
-						'icon'  => 'eicon-text-align-center',
-					],
-					'flex-end' => [
-						'title' => __( 'Right', 'mentorai' ),
-						'icon'  => 'eicon-text-align-right',
-					],
+					'flex-start' => [ 'title' => __( 'Left', 'mentorai' ), 'icon' => 'eicon-text-align-left' ],
+					'center'     => [ 'title' => __( 'Center', 'mentorai' ), 'icon' => 'eicon-text-align-center' ],
+					'flex-end'   => [ 'title' => __( 'Right', 'mentorai' ), 'icon' => 'eicon-text-align-right' ],
 				],
 				'default'   => 'flex-start',
 				'selectors' => [
@@ -170,6 +160,37 @@ final class Controls {
 				'size_units' => [ 'px', '%' ],
 				'selectors'  => [
 					'{{WRAPPER}} .mentorai-bc' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$widget->end_controls_section();
+
+		/* -----------------------
+		 * Style: Separator
+		 * ----------------------*/
+		$widget->start_controls_section(
+			'section_style_separator',
+			[
+				'label' => __( 'Separator', 'mentorai' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		// ✅ the reliable sizing method
+		$widget->add_responsive_control(
+			'separator_size',
+			[
+				'label'      => __( 'Icon Size', 'mentorai' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em' ],
+				'range'      => [
+					'px' => [ 'min' => 8, 'max' => 120 ],
+					'em' => [ 'min' => 0.5, 'max' => 6 ],
+				],
+				'default'    => [ 'size' => 14, 'unit' => 'px' ],
+				'selectors'  => [
+					'{{WRAPPER}} .mentorai-bc' => '--mentorai-sep-size: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -243,38 +264,27 @@ final class Controls {
 
 		$widget->add_control(
 			'separator_color',
-			[
-				'label'     => __( 'Separator Color', 'mentorai' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .mentorai-bc__sep' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .mentorai-bc__sep svg' => 'fill: {{VALUE}};',
-				],
-			]
-		);
+      [
+        'label'     => __( 'Separator Color', 'mentorai' ),
+        'type'      => Controls_Manager::COLOR,
+        'selectors' => [
+          // Applies to text separators + icon separators (via currentColor)
+          '{{WRAPPER}} .mentorai-bc__sep' => 'color: {{VALUE}};',
 
-		$widget->add_control(
-			'link_decoration',
-			[
-				'label'   => __( 'Link Decoration', 'mentorai' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'none',
-				'options' => [
-					'none'       => __( 'None', 'mentorai' ),
-					'underline'  => __( 'Underline', 'mentorai' ),
-					'overline'   => __( 'Overline', 'mentorai' ),
-					'line-through' => __( 'Line Through', 'mentorai' ),
-				],
-				'selectors' => [
-					'{{WRAPPER}} .mentorai-bc__link' => 'text-decoration: {{VALUE}};',
-				],
-			]
+          // Force SVG parts to inherit currentColor (more reliable than only svg fill)
+          '{{WRAPPER}} .mentorai-bc__sep svg'    => 'fill: currentColor; stroke: currentColor;',
+          '{{WRAPPER}} .mentorai-bc__sep svg *'  => 'fill: currentColor; stroke: currentColor;',
+
+          // Font Awesome explicitly (safe)
+          '{{WRAPPER}} .mentorai-bc__sep i' => 'color: {{VALUE}};',
+        ],
+      ]
 		);
 
 		$widget->end_controls_section();
 
 		/* -----------------------
-		 * Style: Box (Container)
+		 * Style: Box
 		 * ----------------------*/
 		$widget->start_controls_section(
 			'section_style_box',

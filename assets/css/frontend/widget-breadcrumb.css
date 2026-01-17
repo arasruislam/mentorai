@@ -1,65 +1,103 @@
 /* Base layout (required for controls like gap/alignment) */
-.mentorai-bc__list{
-  display:flex;
-  align-items:center;
-  flex-wrap:wrap;
-  list-style:none;
-  margin:0;
-  padding:0;
+.mentorai-bc__list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .mentorai-bc__item,
-.mentorai-bc__sep{
-  list-style:none;
+.mentorai-bc__sep {
+  list-style: none;
 }
 
 /* Preset: Minimal */
-.mentorai-bc--preset-minimal .mentorai-bc__sep{ opacity:.55; }
+.mentorai-bc--preset-minimal .mentorai-bc__sep {
+  opacity: 0.55;
+}
 
 /* Preset: Pill */
-.mentorai-bc--preset-pill{
-  background: rgba(200,172,214,.18);
-  border: 1px solid rgba(67,61,139,.18);
+.mentorai-bc--preset-pill {
+  background: rgba(200, 172, 214, 0.18);
+  border: 1px solid rgba(67, 61, 139, 0.18);
   border-radius: 999px;
   padding: 8px 12px;
 }
-.mentorai-bc--preset-pill .mentorai-bc__sep{ opacity:.6; }
+.mentorai-bc--preset-pill .mentorai-bc__sep {
+  opacity: 0.6;
+}
 
 /* Preset: Underline */
-.mentorai-bc--preset-underline .mentorai-bc__link{
+.mentorai-bc--preset-underline .mentorai-bc__link {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.mentorai-bc--preset-underline .mentorai-bc__current{
+.mentorai-bc--preset-underline .mentorai-bc__current {
   font-weight: 700;
 }
 
 /* Preset: Dark */
-.mentorai-bc--preset-dark{
-  background: #17153B;
-  color: #C8ACD6;
+.mentorai-bc--preset-dark {
+  background: #17153b;
+  color: #c8acd6;
   border-radius: 14px;
   padding: 10px 12px;
 }
-.mentorai-bc--preset-dark .mentorai-bc__link{ color:#C8ACD6; }
-.mentorai-bc--preset-dark .mentorai-bc__sep{ color: rgba(200,172,214,.7); }
-.mentorai-bc--preset-dark .mentorai-bc__current{ color:#ffffff; }
+.mentorai-bc--preset-dark .mentorai-bc__link {
+  color: #c8acd6;
+}
+.mentorai-bc--preset-dark .mentorai-bc__sep {
+  color: rgba(200, 172, 214, 0.7);
+}
+.mentorai-bc--preset-dark .mentorai-bc__current {
+  color: #ffffff;
+}
 
 /* Preset: Glass */
-.mentorai-bc--preset-glass{
-  background: rgba(200,172,214,.14);
-  border: 1px solid rgba(46,35,108,.16);
+.mentorai-bc--preset-glass {
+  background: rgba(200, 172, 214, 0.14);
+  border: 1px solid rgba(46, 35, 108, 0.16);
   border-radius: 16px;
   padding: 10px 12px;
   backdrop-filter: blur(10px);
 }
 
-.mentorai-bc__sep{
-	display:inline-flex;
-	align-items:center;
+/* Separator rendering */
+.mentorai-bc__sep {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.mentorai-bc__sep i,
-.mentorai-bc__sep svg{
-	display:block;
-	line-height:1;
+/* ✅ scalable wrapper controlled by Elementor slider via CSS variable */
+.mentorai-bc__sep-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mentorai-sep-size, 14px);
+  line-height: 1;
+}
+
+/* FontAwesome */
+.mentorai-bc__sep-icon i {
+  font-size: 1em;
+  line-height: 1;
+  display: block;
+}
+
+/* SVG */
+.mentorai-bc__sep-icon svg {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
+.mentorai-bc__sep svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+.mentorai-bc__sep svg * {
+  fill: currentColor;
+  stroke: currentColor;
 }

@@ -19,9 +19,6 @@ final class Widget extends Base_Widget {
 		return 'eicon-breadcrumbs';
 	}
 
-	/**
-	 * Frontend preset CSS file handle (we will register/enqueue it via Assets Manager).
-	 */
 	public function get_style_depends(): array {
 		return [ 'mentorai-widget-breadcrumb' ];
 	}
