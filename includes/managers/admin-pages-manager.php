@@ -21,7 +21,7 @@ final class Admin_Pages_Manager {
 			$cap,
 			self::PAGE_SLUG,
 			[ $this, 'render_router' ],
-			'dashicons-lightbulb',
+			MENTORAI_URL . 'assets/img/mentorai-logo.png',
 			58
 		);
 

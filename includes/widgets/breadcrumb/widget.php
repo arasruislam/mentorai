@@ -12,11 +12,11 @@ final class Widget extends Base_Widget {
 	}
 
 	public function get_title(): string {
-		return __( 'Breadcrumb (Mentorai)', 'mentorai' );
+		return __( 'Breadcrumb', 'mentorai' );
 	}
 
 	public function get_icon(): string {
-		return 'eicon-breadcrumbs';
+		return 'eicon-navigation-horizontal mentorai-panel-badge';
 	}
 
 	public function get_style_depends(): array {

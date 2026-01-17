@@ -11,6 +11,8 @@ final class Assets_Manager {
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
     add_action( 'wp_enqueue_scripts', [ $this, 'register_frontend_styles' ] );
+
+
 	}
 
 	public function enqueue_admin_assets( string $hook ): void {
@@ -28,6 +30,14 @@ final class Assets_Manager {
 			[],
 			MENTORAI_VERSION
 		);
+
+    wp_enqueue_style(
+      'mentorai-editor',
+      MENTORAI_URL . 'assets/css/editor/editor.css',
+      [],
+      MENTORAI_VERSION
+    );
+
 	}
 
 	public function enqueue_editor_styles(): void {

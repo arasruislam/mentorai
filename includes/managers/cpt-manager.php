@@ -27,7 +27,7 @@ final class CPT_Manager {
 			'show_ui'             => false,
 			'show_in_menu'        => true,
 			'menu_position'       => 58,
-			'menu_icon'           => 'dashicons-lightbulb', // you can change later
+			'menu_icon'           => false,
 			'supports'            => [ ],
 			'has_archive'         => false,
 			'exclude_from_search' => true,

@@ -1,0 +1,22 @@
+/* ===============================
+   Mentorai Widget Badge (PNG)
+   =============================== */
+
+/* Widget card wrapper */
+.elementor-panel .elementor-element-wrapper:has(.mentorai-panel-badge) {
+  position: relative;
+}
+
+/* Top-right badge */
+.elementor-panel .elementor-element-wrapper:has(.mentorai-panel-badge)::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 25px;
+  height: 25px;
+  background: url("../../img/mentorai-logo.png") center / contain no-repeat;
+  border-radius: 4px;
+  opacity: 0.95;
+  pointer-events: none;
+}

@@ -1,5 +1,5 @@
 <?php
-namespace MentorAI\Managers;
+namespace Mentorai\Managers;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -16,7 +16,7 @@ final class Categories_Manager {
 			self::CATEGORY_SLUG,
 			[
 				'title' => __( 'Mentorai', 'mentorai' ),
-				'icon'  => 'fa fa-plug',
+				'icon'  => 'eicon-star',
 			]
 		);
 	}
