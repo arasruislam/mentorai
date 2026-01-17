@@ -12,13 +12,14 @@ final class Widgets_Manager {
 	}
 
 	public function register_widgets( Elementor_Widgets_Manager $widgets_manager ): void {
-		// Load & register widgets here (one place only)
-		$this->register_hello( $widgets_manager );
+		// Load & register widgets here
+		$this->register_breadcrumb( $widgets_manager );
 	}
 
-	private function register_hello( Elementor_Widgets_Manager $widgets_manager ): void {
-		require_once MENTORAI_PATH . 'includes/widgets/hello/widget.php';
-
-    $widgets_manager->register( new \Mentorai\Widgets\Hello\Widget() );
-	}
+  // Breadcrumb
+	private function register_breadcrumb( \Elementor\Widgets_Manager $widgets_manager ): void {
+	require_once MENTORAI_PATH . 'includes/widgets/breadcrumb/widget.php';
+	require_once MENTORAI_PATH . 'includes/widgets/breadcrumb/controls.php';
+	$widgets_manager->register( new \Mentorai\Widgets\Breadcrumb\Widget() );
+  }
 }
