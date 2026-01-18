@@ -1,40 +1,42 @@
 <?php
-namespace MentorAI\Widgets\Button;
+namespace Mentorai\Widgets\Button;
 
-use MentorAI\Widgets\_Shared\Base_Widget;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+require_once MENTORAI_PATH . 'includes/widgets/_shared/base-widget.php';
+
+use Mentorai\Widgets\Shared\Base_Widget;
 
 class Widget extends Base_Widget {
 
-    public function get_name() {
-        return 'mentorai-button';
-    }
+	public function get_name(): string {
+		return 'mentorai-button';
+	}
 
-    public function get_title() {
-        return __( 'MentorAI Button', 'mentorai' );
-    }
+	public function get_title(): string {
+		return __( 'MentorAI Button', 'mentorai' );
+	}
 
-    public function get_icon() {
-        return 'eicon-button';
-    }
+	public function get_icon(): string {
+		return 'eicon-button';
+	}
 
-    public function get_categories() {
-        // আপনার categories-manager.php যেটা রেজিস্টার করে (যেমন 'mentorai')
-        return [ 'mentorai' ];
-    }
+	public function get_categories(): array {
+		return parent::get_categories();
+	}
 
-    public function get_style_depends() {
-        return [ 'mentorai-button' ];
-    }
+	public function get_style_depends(): array {
+		return [ 'mentorai-button' ];
+	}
 
-    protected function register_controls() {
-        require __DIR__ . '/controls.php';
-        Controls::register( $this );
-    }
+	protected function register_controls(): void {
+		require __DIR__ . '/controls.php';
+		Controls::register( $this );
+	}
 
-    protected function render() {
-        $settings = $this->get_settings_for_display();
-        require __DIR__ . '/view.php';
-    }
+	protected function render(): void {
+		$settings = $this->get_settings_for_display();
+		$widget   = $this;
+		require __DIR__ . '/view.php';
+	}
 }
