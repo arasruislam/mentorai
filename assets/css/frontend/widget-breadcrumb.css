@@ -1,35 +1,30 @@
 /* =========================================================
-   Mentorai Breadcrumb - 10 Built-in Presets (01-10)
-   Compatible with Elementor styling controls.
+   Mentorai Breadcrumb - 15 DISTINCT presets
+   Inspired by: Shadcn UI, Ant Design, Material UI, modern SaaS.
+   Markup required:
+   .mentorai-bc
+   .mentorai-bc__list
+   .mentorai-bc__item
+   .mentorai-bc__link
+   .mentorai-bc__current
+   .mentorai-bc__sep
    ========================================================= */
 
 .mentorai-bc{
-  --bc-bg: transparent;
-  --bc-border: transparent;
-  --bc-radius: 16px;
+  --bc-gap: 12px;
+  --bc-radius: 14px;
   --bc-pad-y: 0px;
   --bc-pad-x: 0px;
 
-  --bc-gap: 12px;
+  --bc-muted: rgba(0,0,0,.55);
+  --bc-border: rgba(0,0,0,.08);
 
-  --bc-link: inherit;
-  --bc-link-hover: inherit;
-  --bc-current: inherit;
-
-  --bc-sep-opacity: .55;
-  --bc-muted: rgba(0,0,0,.45);
-
-  --bc-active-bg: rgba(67,61,139,.12);
-  --bc-active-text: #433D8B;
-
-  --bc-chip-bg: rgba(0,0,0,.05);
-  --bc-chip-border: rgba(0,0,0,.08);
+  --bc-primary: #433D8B;
+  --bc-primary-soft: rgba(67,61,139,.14);
 
   display:block;
-  background: var(--bc-bg);
-  border: 1px solid var(--bc-border);
-  border-radius: var(--bc-radius);
   padding: var(--bc-pad-y) var(--bc-pad-x);
+  border-radius: var(--bc-radius);
 }
 
 .mentorai-bc__list{
@@ -50,19 +45,12 @@
 }
 
 .mentorai-bc__link{
-  color: var(--bc-link);
   text-decoration:none;
-  transition: transform .15s ease, opacity .15s ease, color .15s ease, background .15s ease;
-}
-
-.mentorai-bc__link:hover{
-  color: var(--bc-link-hover);
-  opacity:.92;
+  transition: color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease, opacity .18s ease;
 }
 
 .mentorai-bc__current{
-  color: var(--bc-current);
-  font-weight: 600;
+  font-weight: 650;
   opacity: .85;
 }
 
@@ -70,451 +58,414 @@
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  opacity: var(--bc-sep-opacity);
+  opacity:.55;
   line-height:1;
 }
 
-.mentorai-bc__sep svg,
-.mentorai-bc__sep svg *{
-  fill: currentColor;
-  stroke: currentColor;
-}
-
-/* Make separator icon/text obey icon-size control (recommended)
-   - your icon size control should set font-size on .mentorai-bc__sep
-   - this ensures svg scales too
-*/
-.mentorai-bc__sep svg{
-  width: 1em;
-  height: 1em;
-  display:block;
-}
+/* Ensure separator SVG scales with font-size (your icon size control can set font-size here) */
+.mentorai-bc__sep svg{ width:1em; height:1em; display:block; }
+.mentorai-bc__sep svg, .mentorai-bc__sep svg *{ fill: currentColor; stroke: currentColor; }
 
 /* ---------------------------------------------------------
-   01 — Chevron (clean, modern)
+   01 — Ant Design Classic Breadcrumb (no container)
+   Pattern: subtle hover pill + clean separators
 --------------------------------------------------------- */
 .mentorai-bc--preset-01-chevron{
-  --bc-gap: 14px;
-  --bc-pad-y: 12px;
-  --bc-pad-x: 14px;
-  --bc-bg: rgba(200,172,214,.10);
-  --bc-border: rgba(46,35,108,.12);
-  box-shadow: 0 14px 32px rgba(23,21,59,.08);
-}
-.mentorai-bc--preset-01-chevron .mentorai-bc__link:hover{
-  transform: translateY(-1px);
-}
-
-/* ---------------------------------------------------------
-   02 — Icon Trail (like row 02)
-   Notes:
-   - uses your chosen separator icon
-   - emphasizes spacing and “trail”
---------------------------------------------------------- */
-.mentorai-bc--preset-02-icons{
-  --bc-gap: 16px;
-  --bc-pad-y: 12px;
-  --bc-pad-x: 14px;
-  --bc-bg: rgba(200,172,214,.08);
-  --bc-border: rgba(67,61,139,.10);
-  box-shadow: 0 12px 26px rgba(23,21,59,.06);
-}
-.mentorai-bc--preset-02-icons .mentorai-bc__link{
-  font-weight: 600;
-}
-.mentorai-bc--preset-02-icons .mentorai-bc__current{
-  opacity:.6;
-}
-
-/* ---------------------------------------------------------
-   03 — Compact (tight, task UI friendly)
---------------------------------------------------------- */
-.mentorai-bc--preset-03-compact{
-  --bc-gap: 10px;
-  --bc-pad-y: 8px;
-  --bc-pad-x: 10px;
-  --bc-bg: rgba(0,0,0,.02);
-  --bc-border: rgba(0,0,0,.06);
-}
-.mentorai-bc--preset-03-compact .mentorai-bc__current{
-  font-weight: 600;
-}
-
-/* ---------------------------------------------------------
-   04 — Slash (explicit separators, minimal surface)
---------------------------------------------------------- */
-.mentorai-bc--preset-04-slash{
-  --bc-gap: 14px;
-  --bc-pad-y: 0px;
-  --bc-pad-x: 0px;
+  padding: 0;
   background: transparent;
   border: 0;
   border-radius: 0;
+  --bc-gap: 10px;
 }
-.mentorai-bc--preset-04-slash .mentorai-bc__sep{
-  opacity: .75;
+.mentorai-bc--preset-01-chevron .mentorai-bc__link{
+  padding: 2px 6px;
+  border-radius: 6px;
 }
-.mentorai-bc--preset-04-slash .mentorai-bc__link{
+.mentorai-bc--preset-01-chevron .mentorai-bc__link:hover{
+  background: rgba(0,0,0,.05);
+  color: var(--bc-primary);
+}
+.mentorai-bc--preset-01-chevron .mentorai-bc__current{
+  opacity: .65;
   font-weight: 600;
 }
 
 /* ---------------------------------------------------------
-   05 — Steps (Line)  (visual progress feel)
-   Implementation:
-   - we simulate connecting line by styling items as inline-flex
+   02 — Shadcn Ghost (super neutral, “text UI”)
+   Pattern: very quiet, underline on hover only
 --------------------------------------------------------- */
-.mentorai-bc--preset-05-steps{
-  --bc-gap: 18px;
-  --bc-pad-y: 12px;
-  --bc-pad-x: 14px;
-  --bc-bg: rgba(200,172,214,.08);
-  --bc-border: rgba(46,35,108,.10);
-  box-shadow: 0 14px 32px rgba(23,21,59,.06);
+.mentorai-bc--preset-02-icons{
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  --bc-gap: 12px;
 }
-.mentorai-bc--preset-05-steps .mentorai-bc__list{
-  gap: 18px;
+.mentorai-bc--preset-02-icons .mentorai-bc__sep{ opacity:.35; }
+.mentorai-bc--preset-02-icons .mentorai-bc__link{
+  color: rgba(0,0,0,.70);
 }
-.mentorai-bc--preset-05-steps .mentorai-bc__sep{
-  opacity: 1;
-  height: 2px;
-  width: 70px;
-  background: rgba(0,0,0,.18);
-  border-radius: 999px;
-  font-size: 0; /* hides text separator if any */
+.mentorai-bc--preset-02-icons .mentorai-bc__link:hover{
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
-.mentorai-bc--preset-05-steps .mentorai-bc__sep svg{
-  display:none;
-}
-.mentorai-bc--preset-05-steps .mentorai-bc__current{
-  color: var(--bc-active-text);
-  opacity: 1;
+.mentorai-bc--preset-02-icons .mentorai-bc__current{
+  color: rgba(0,0,0,.80);
   font-weight: 700;
+  opacity: 1;
 }
 
 /* ---------------------------------------------------------
-   06 — Steps (Check) (completed steps vibe)
-   Notes: purely CSS “check chip” style for links
+   03 — Material Chips (no separators, chip items)
+   Pattern: distinct chips, active filled
 --------------------------------------------------------- */
-.mentorai-bc--preset-06-steps-check{
-  --bc-gap: 18px;
-  --bc-pad-y: 12px;
-  --bc-pad-x: 14px;
-  --bc-bg: rgba(200,172,214,.08);
-  --bc-border: rgba(46,35,108,.10);
-  box-shadow: 0 14px 32px rgba(23,21,59,.06);
+.mentorai-bc--preset-03-compact{
+  padding: 8px;
+  background: rgba(0,0,0,.02);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 18px;
+  --bc-gap: 8px;
 }
-.mentorai-bc--preset-06-steps-check .mentorai-bc__link{
-  position: relative;
-  padding-left: 26px;
-  font-weight: 650;
-}
-.mentorai-bc--preset-06-steps-check .mentorai-bc__link::before{
-  content: "";
-  position:absolute;
-  left:0;
-  top:50%;
-  width: 18px;
-  height: 18px;
-  transform: translateY(-50%);
-  border-radius: 999px;
-  background: rgba(0,0,0,.12);
-}
-.mentorai-bc--preset-06-steps-check .mentorai-bc__sep{
-  opacity: 1;
-  height: 2px;
-  width: 62px;
-  background: rgba(0,0,0,.16);
-  border-radius: 999px;
-  font-size: 0;
-}
-.mentorai-bc--preset-06-steps-check .mentorai-bc__sep svg{ display:none; }
-.mentorai-bc--preset-06-steps-check .mentorai-bc__current{
-  color: var(--bc-active-text);
-  opacity: 1;
-  font-weight: 800;
-}
-
-/* ---------------------------------------------------------
-   07 — Dots Progress (timeline dots)
---------------------------------------------------------- */
-.mentorai-bc--preset-07-dots{
-  --bc-gap: 18px;
-  --bc-pad-y: 14px;
-  --bc-pad-x: 16px;
-  --bc-bg: rgba(200,172,214,.08);
-  --bc-border: rgba(46,35,108,.10);
-  box-shadow: 0 14px 32px rgba(23,21,59,.06);
-}
-.mentorai-bc--preset-07-dots .mentorai-bc__item{
-  position: relative;
-}
-.mentorai-bc--preset-07-dots .mentorai-bc__link,
-.mentorai-bc--preset-07-dots .mentorai-bc__current{
+.mentorai-bc--preset-03-compact .mentorai-bc__sep{ display:none; }
+.mentorai-bc--preset-03-compact .mentorai-bc__link,
+.mentorai-bc--preset-03-compact .mentorai-bc__current{
   display:inline-flex;
   align-items:center;
-  gap: 8px;
-  font-weight: 650;
-}
-.mentorai-bc--preset-07-dots .mentorai-bc__item::before{
-  content:"";
-  width: 14px;
-  height: 14px;
+  padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(67,61,139,.35);
-  display:inline-block;
-  margin-right: 8px;
-  transform: translateY(1px);
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.7);
+}
+.mentorai-bc--preset-03-compact .mentorai-bc__link:hover{
+  border-color: rgba(67,61,139,.25);
+  background: rgba(67,61,139,.08);
+}
+.mentorai-bc--preset-03-compact .mentorai-bc__current{
+  background: var(--bc-primary);
+  border-color: var(--bc-primary);
+  color: #fff;
+  font-weight: 800;
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------
+   04 — Shadcn Underline Animated (editorial)
+   Pattern: clean animated underline, no container
+--------------------------------------------------------- */
+.mentorai-bc--preset-04-slash{
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  --bc-gap: 14px;
+}
+.mentorai-bc--preset-04-slash .mentorai-bc__sep{ opacity:.35; }
+.mentorai-bc--preset-04-slash .mentorai-bc__link{
+  position: relative;
+  padding-bottom: 2px;
+  color: rgba(0,0,0,.75);
+}
+.mentorai-bc--preset-04-slash .mentorai-bc__link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:100%;
+  height:2px;
+  background: currentColor;
+  opacity:.85;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .2s ease;
+}
+.mentorai-bc--preset-04-slash .mentorai-bc__link:hover::after{
+  transform: scaleX(1);
+}
+.mentorai-bc--preset-04-slash .mentorai-bc__current{
+  font-weight: 900;
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------
+   05 — Neumorph Soft (distinct soft UI)
+   Pattern: inset + raised
+--------------------------------------------------------- */
+.mentorai-bc--preset-05-steps{
+  --bc-gap: 12px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: #f5f6ff;
+  border: 1px solid rgba(67,61,139,.10);
+  box-shadow:
+    10px 10px 24px rgba(23,21,59,.08),
+    -10px -10px 24px rgba(255,255,255,.9);
+}
+.mentorai-bc--preset-05-steps .mentorai-bc__link{
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+.mentorai-bc--preset-05-steps .mentorai-bc__link:hover{
+  box-shadow:
+    inset 8px 8px 18px rgba(23,21,59,.08),
+    inset -8px -8px 18px rgba(255,255,255,.85);
+}
+.mentorai-bc--preset-05-steps .mentorai-bc__current{
+  color: var(--bc-primary);
+  font-weight: 900;
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------
+   06 — Glass Frost (real frosted panel)
+   Pattern: blur + highlight border
+--------------------------------------------------------- */
+.mentorai-bc--preset-06-steps-check{
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(200,172,214,.12);
+  border: 1px solid rgba(255,255,255,.45);
+  box-shadow: 0 18px 44px rgba(23,21,59,.12);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.mentorai-bc--preset-06-steps-check .mentorai-bc__sep{ opacity:.45; }
+.mentorai-bc--preset-06-steps-check .mentorai-bc__link:hover{
+  transform: translateY(-1px);
+}
+.mentorai-bc--preset-06-steps-check .mentorai-bc__current{
+  opacity: 1;
+  font-weight: 900;
+}
+
+/* ---------------------------------------------------------
+   07 — Terminal / Mono (developer UI)
+   Pattern: monospace + bracket separators
+--------------------------------------------------------- */
+.mentorai-bc--preset-07-dots{
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #0f1220;
+  border: 1px solid rgba(255,255,255,.10);
+  color: rgba(255,255,255,.82);
+  --bc-gap: 10px;
+}
+.mentorai-bc--preset-07-dots .mentorai-bc__link{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: rgba(255,255,255,.82);
 }
 .mentorai-bc--preset-07-dots .mentorai-bc__sep{
   opacity: 1;
-  height: 2px;
-  width: 68px;
-  background: rgba(67,61,139,.25);
-  border-radius: 999px;
-  font-size: 0;
+  color: rgba(200,172,214,.75);
+}
+.mentorai-bc--preset-07-dots .mentorai-bc__sep::before{
+  content: "›";
+  font-size: 14px;
+  line-height: 1;
 }
 .mentorai-bc--preset-07-dots .mentorai-bc__sep svg{ display:none; }
 .mentorai-bc--preset-07-dots .mentorai-bc__current{
-  color: var(--bc-active-text);
-  font-weight: 800;
+  color: #fff;
   opacity: 1;
+  font-weight: 800;
 }
 
 /* ---------------------------------------------------------
-   08 — Tabs (segmented, like row 08)
+   08 — Tag Trail (tags + tiny dot separators)
+   Pattern: tag items + dot separators
 --------------------------------------------------------- */
 .mentorai-bc--preset-08-tabs{
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   --bc-gap: 10px;
-  --bc-pad-y: 10px;
-  --bc-pad-x: 10px;
-  --bc-bg: rgba(200,172,214,.10);
-  --bc-border: rgba(46,35,108,.12);
-  box-shadow: 0 14px 32px rgba(23,21,59,.06);
-}
-.mentorai-bc--preset-08-tabs .mentorai-bc__sep{
-  display:none; /* tabs don't need separators */
 }
 .mentorai-bc--preset-08-tabs .mentorai-bc__link,
 .mentorai-bc--preset-08-tabs .mentorai-bc__current{
   display:inline-flex;
   align-items:center;
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.55);
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.04);
   border: 1px solid rgba(0,0,0,.06);
 }
-.mentorai-bc--preset-08-tabs .mentorai-bc__link:hover{
-  background: rgba(255,255,255,.8);
-  transform: translateY(-1px);
+.mentorai-bc--preset-08-tabs .mentorai-bc__sep{
+  opacity: 1;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.25);
+  font-size: 0;
 }
+.mentorai-bc--preset-08-tabs .mentorai-bc__sep svg{ display:none; }
 .mentorai-bc--preset-08-tabs .mentorai-bc__current{
-  background: rgba(67,61,139,.16);
-  border-color: rgba(67,61,139,.16);
-  color: var(--bc-active-text);
-  font-weight: 800;
-  opacity: 1;
-}
-
-/* ---------------------------------------------------------
-   09 — Tabs (Active Pill) (like row 09)
---------------------------------------------------------- */
-.mentorai-bc--preset-09-tabs-active{
-  --bc-gap: 10px;
-  --bc-pad-y: 10px;
-  --bc-pad-x: 10px;
-  --bc-bg: rgba(200,172,214,.10);
-  --bc-border: rgba(46,35,108,.12);
-  box-shadow: 0 14px 32px rgba(23,21,59,.06);
-}
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{
-  display:none;
-}
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__link,
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__current{
-  display:inline-flex;
-  align-items:center;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.60);
-  border: 1px solid rgba(0,0,0,.06);
-}
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__current{
-  background: #433D8B;
-  border-color: #433D8B;
-  color: #ffffff;
-  font-weight: 800;
-  opacity: 1;
-}
-
-/* ---------------------------------------------------------
-   10 — Pill Arrow (like row 10)
-   - keep separators but make them arrow-like
---------------------------------------------------------- */
-.mentorai-bc--preset-10-pill-arrow{
-  --bc-gap: 12px;
-  --bc-pad-y: 12px;
-  --bc-pad-x: 14px;
-  --bc-bg: rgba(200,172,214,.10);
-  --bc-border: rgba(46,35,108,.12);
-  box-shadow: 0 14px 32px rgba(23,21,59,.06);
-}
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__link{
-  display:inline-flex;
-  align-items:center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.55);
-  border: 1px solid rgba(0,0,0,.06);
-}
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__link:hover{
-  background: rgba(255,255,255,.85);
-  transform: translateY(-1px);
-}
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__current{
-  display:inline-flex;
-  align-items:center;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(67,61,139,.16);
-  color: var(--bc-active-text);
+  background: rgba(67,61,139,.14);
+  border-color: rgba(67,61,139,.18);
+  color: var(--bc-primary);
   font-weight: 900;
   opacity: 1;
 }
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__sep{
-  opacity: 1;
-}
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__sep svg{
-  width: 1em;
-  height: 1em;
-}
 
-/* Responsive polish */
-@media (max-width: 767px){
-  .mentorai-bc{ --bc-gap: 10px; }
-  .mentorai-bc--preset-05-steps .mentorai-bc__sep,
-  .mentorai-bc--preset-06-steps-check .mentorai-bc__sep,
-  .mentorai-bc--preset-07-dots .mentorai-bc__sep{
-    width: 42px;
-  }
+/* ---------------------------------------------------------
+   09 — Timeline Steps (true progress)
+   Pattern: nodes + connecting line (no icon separators)
+--------------------------------------------------------- */
+.mentorai-bc--preset-09-tabs-active{
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(0,0,0,.02);
+  border: 1px solid rgba(0,0,0,.06);
+  --bc-gap: 18px;
 }
-
-/* =========================================================
-   Classic Presets (modern, professional)
-   - minimal
-   - pill
-   - underline
-   - dark
-   - glass
-   ========================================================= */
-
-/* Classic: Minimal */
-.mentorai-bc--preset-minimal{
-  --bc-gap: 10px;
-  --bc-sep-opacity: .55;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  border-radius: 0;
-}
-.mentorai-bc--preset-minimal .mentorai-bc__link:hover{
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Classic: Pill */
-.mentorai-bc--preset-pill{
-  --bc-radius: 999px;
-  --bc-pad-y: 10px;
-  --bc-pad-x: 14px;
-  --bc-gap: 10px;
-  --bc-sep-opacity: .55;
-
-  background: rgba(200,172,214,.14);
-  border: 1px solid rgba(67,61,139,.18);
-  box-shadow: 0 10px 22px rgba(23,21,59,.08);
-}
-.mentorai-bc--preset-pill .mentorai-bc__link{
-  padding: 4px 8px;
-  border-radius: 999px;
-}
-.mentorai-bc--preset-pill .mentorai-bc__link:hover{
-  background: rgba(200,172,214,.18);
-}
-
-/* Classic: Underline */
-.mentorai-bc--preset-underline{
-  --bc-pad-y: 0;
-  --bc-pad-x: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  --bc-gap: 12px;
-  --bc-sep-opacity: .45;
-}
-.mentorai-bc--preset-underline .mentorai-bc__link{
+.mentorai-bc--preset-09-tabs-active .mentorai-bc__item{
   position: relative;
-  padding-bottom: 2px;
+  padding-left: 18px;
+  font-weight: 650;
 }
-.mentorai-bc--preset-underline .mentorai-bc__link::after{
+.mentorai-bc--preset-09-tabs-active .mentorai-bc__item::before{
   content:"";
   position:absolute;
   left:0;
-  bottom:0;
-  width:100%;
-  height:2px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .2s ease;
-  opacity: .75;
+  top:50%;
+  width: 12px;
+  height: 12px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: rgba(67,61,139,.45);
 }
-.mentorai-bc--preset-underline .mentorai-bc__link:hover::after{
-  transform: scaleX(1);
+.mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{
+  opacity: 1;
+  width: 60px;
+  height: 2px;
+  background: rgba(67,61,139,.22);
+  border-radius: 999px;
+  font-size: 0;
+}
+.mentorai-bc--preset-09-tabs-active .mentorai-bc__sep svg{ display:none; }
+.mentorai-bc--preset-09-tabs-active .mentorai-bc__current{
+  color: var(--bc-primary);
+  opacity: 1;
+  font-weight: 950;
+}
+
+/* ---------------------------------------------------------
+   10 — Segmented Control (iOS style)
+   Pattern: segmented, separators hidden
+--------------------------------------------------------- */
+.mentorai-bc--preset-10-pill-arrow{
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.06);
+  --bc-gap: 6px;
+}
+.mentorai-bc--preset-10-pill-arrow .mentorai-bc__sep{ display:none; }
+.mentorai-bc--preset-10-pill-arrow .mentorai-bc__link,
+.mentorai-bc--preset-10-pill-arrow .mentorai-bc__current{
+  padding: 10px 14px;
+  border-radius: 999px;
+  display:inline-flex;
+  align-items:center;
+}
+.mentorai-bc--preset-10-pill-arrow .mentorai-bc__link:hover{
+  background: rgba(255,255,255,.7);
+}
+.mentorai-bc--preset-10-pill-arrow .mentorai-bc__current{
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(23,21,59,.10);
+  color: var(--bc-primary);
+  opacity: 1;
+  font-weight: 950;
+}
+
+/* ===========================
+   CLASSIC 5 (also DISTINCT)
+   =========================== */
+
+/* Classic — Minimal (tiny, quiet, no surface) */
+.mentorai-bc--preset-minimal{
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  --bc-gap: 8px;
+}
+.mentorai-bc--preset-minimal .mentorai-bc__sep{ opacity:.35; }
+.mentorai-bc--preset-minimal .mentorai-bc__current{ opacity:.60; }
+
+/* Classic — Pill (soft capsule container) */
+.mentorai-bc--preset-pill{
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(200,172,214,.14);
+  border: 1px solid rgba(67,61,139,.18);
+  box-shadow: 0 10px 22px rgba(23,21,59,.08);
+  --bc-gap: 12px;
+}
+.mentorai-bc--preset-pill .mentorai-bc__link:hover{
+  transform: translateY(-1px);
+}
+
+/* Classic — Underline (strong editorial underline only) */
+.mentorai-bc--preset-underline{
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  --bc-gap: 14px;
+}
+.mentorai-bc--preset-underline .mentorai-bc__sep{ opacity:.25; }
+.mentorai-bc--preset-underline .mentorai-bc__link{
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+}
+.mentorai-bc--preset-underline .mentorai-bc__link:hover{
+  border-bottom-color: currentColor;
 }
 .mentorai-bc--preset-underline .mentorai-bc__current{
-  font-weight: 800;
+  font-weight: 950;
   opacity: 1;
 }
 
-/* Classic: Dark (uses your palette) */
+/* Classic — Dark (clean dark, not neon) */
 .mentorai-bc--preset-dark{
-  --bc-radius: 14px;
-  --bc-pad-y: 10px;
-  --bc-pad-x: 14px;
-  --bc-gap: 10px;
-  --bc-sep-opacity: .65;
-
-  background: linear-gradient(135deg, #17153B 0%, #2E236C 100%);
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: #17153B;
   border: 1px solid rgba(200,172,214,.12);
-  box-shadow: 0 16px 32px rgba(23,21,59,.22);
   color: rgba(200,172,214,.92);
-}
-.mentorai-bc--preset-dark .mentorai-bc__link{
-  color: rgba(200,172,214,.92);
-}
-.mentorai-bc--preset-dark .mentorai-bc__link:hover{
-  color: #ffffff;
+  --bc-gap: 12px;
 }
 .mentorai-bc--preset-dark .mentorai-bc__current{
-  color: #ffffff;
+  color: #fff;
   opacity: 1;
+  font-weight: 900;
 }
 
-/* Classic: Glass */
+/* Classic — Glass (soft glass panel) */
 .mentorai-bc--preset-glass{
-  --bc-radius: 16px;
-  --bc-pad-y: 12px;
-  --bc-pad-x: 14px;
-  --bc-gap: 10px;
-  --bc-sep-opacity: .6;
-
-  background: rgba(200,172,214,.12);
-  border: 1px solid rgba(46,35,108,.18);
-  box-shadow: 0 18px 40px rgba(23,21,59,.14);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.35);
+  box-shadow: 0 18px 44px rgba(23,21,59,.14);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
-.mentorai-bc--preset-glass .mentorai-bc__link:hover{
-  transform: translateY(-1px);
+
+/* --------------------------
+   Extra uniqueness helpers
+-------------------------- */
+
+/* When a preset hides svg separators via pseudo content */
+.mentorai-bc--preset-07-dots .mentorai-bc__sep,
+.mentorai-bc--preset-08-tabs .mentorai-bc__sep,
+.mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{
+  align-self: center;
+}
+
+/* Responsive */
+@media (max-width: 767px){
+  .mentorai-bc__list{ gap: 10px; }
+  .mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{ width: 40px; }
 }
