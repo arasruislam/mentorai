@@ -1,15 +1,12 @@
 /* =========================================================
-   Mentorai Breadcrumb - 15 DISTINCT presets
-   Inspired by: Shadcn UI, Ant Design, Material UI, modern SaaS.
-   Markup required:
-   .mentorai-bc
-   .mentorai-bc__list
-   .mentorai-bc__item
-   .mentorai-bc__link
-   .mentorai-bc__current
-   .mentorai-bc__sep
+   Mentorai Breadcrumb - Full Style (10 + Classic 5)
+   + Per-item icons support
+   + Responsive fixes (wrap-safe, no orphan separators)
    ========================================================= */
 
+/* -------------------------
+   Base
+-------------------------- */
 .mentorai-bc{
   --bc-gap: 12px;
   --bc-radius: 14px;
@@ -25,6 +22,10 @@
   display:block;
   padding: var(--bc-pad-y) var(--bc-pad-x);
   border-radius: var(--bc-radius);
+
+  /* prevents rare horizontal overflow */
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .mentorai-bc__list{
@@ -35,6 +36,7 @@
   list-style:none;
   margin:0;
   padding:0;
+  max-width: 100%;
 }
 
 .mentorai-bc__item,
@@ -44,9 +46,26 @@
   padding:0;
 }
 
+/* keep item blocks stable on wrap */
+.mentorai-bc__item{
+  display:inline-flex;
+  align-items:center;
+  max-width: 100%;
+}
+
 .mentorai-bc__link{
   text-decoration:none;
   transition: color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+  display:inline-flex;
+  align-items:center;
+  max-width: 100%;
+}
+
+.mentorai-bc__nolink,
+.mentorai-bc__current{
+  display:inline-flex;
+  align-items:center;
+  max-width: 100%;
 }
 
 .mentorai-bc__current{
@@ -54,6 +73,7 @@
   opacity: .85;
 }
 
+/* Separator */
 .mentorai-bc__sep{
   display:inline-flex;
   align-items:center;
@@ -62,14 +82,61 @@
   line-height:1;
 }
 
-/* Ensure separator SVG scales with font-size (your icon size control can set font-size here) */
+/* Ensure separator SVG scales with font-size (your separator size control sets font-size here) */
 .mentorai-bc__sep svg{ width:1em; height:1em; display:block; }
-.mentorai-bc__sep svg, .mentorai-bc__sep svg *{ fill: currentColor; stroke: currentColor; }
+.mentorai-bc__sep svg,
+.mentorai-bc__sep svg *{
+  fill: currentColor;
+  stroke: currentColor;
+}
 
-/* ---------------------------------------------------------
+/* -------------------------
+   Item Icon core
+-------------------------- */
+.mentorai-bc__label{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px; /* overridden by Elementor control */
+  max-width: 100%;
+}
+
+.mentorai-bc__item-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  line-height: 1;
+  font-size: 1em; /* overridden by Elementor control */
+  flex: 0 0 auto;
+}
+
+.mentorai-bc__item-icon svg{
+  width: 1em;
+  height: 1em;
+  display:block;
+}
+
+.mentorai-bc__item-icon i{
+  line-height: 1;
+}
+
+/* text wrapping */
+.mentorai-bc__text{
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* icon after */
+.mentorai-bc--icon-after .mentorai-bc__label{
+  flex-direction: row;
+}
+
+/* current icon targeting */
+.mentorai-bc__current .mentorai-bc__item-icon{ opacity: 1; }
+
+/* -------------------------
    01 — Ant Design Classic Breadcrumb (no container)
-   Pattern: subtle hover pill + clean separators
---------------------------------------------------------- */
+-------------------------- */
 .mentorai-bc--preset-01-chevron{
   padding: 0;
   background: transparent;
@@ -90,10 +157,9 @@
   font-weight: 600;
 }
 
-/* ---------------------------------------------------------
-   02 — Shadcn Ghost (super neutral, “text UI”)
-   Pattern: very quiet, underline on hover only
---------------------------------------------------------- */
+/* -------------------------
+   02 — Shadcn Ghost
+-------------------------- */
 .mentorai-bc--preset-02-icons{
   padding: 0;
   background: transparent;
@@ -115,10 +181,9 @@
   opacity: 1;
 }
 
-/* ---------------------------------------------------------
-   03 — Material Chips (no separators, chip items)
-   Pattern: distinct chips, active filled
---------------------------------------------------------- */
+/* -------------------------
+   03 — Material Chips (no separators)
+-------------------------- */
 .mentorai-bc--preset-03-compact{
   padding: 8px;
   background: rgba(0,0,0,.02);
@@ -148,10 +213,9 @@
   opacity: 1;
 }
 
-/* ---------------------------------------------------------
-   04 — Shadcn Underline Animated (editorial)
-   Pattern: clean animated underline, no container
---------------------------------------------------------- */
+/* -------------------------
+   04 — Shadcn Underline Animated
+-------------------------- */
 .mentorai-bc--preset-04-slash{
   padding: 0;
   background: transparent;
@@ -186,10 +250,9 @@
   opacity: 1;
 }
 
-/* ---------------------------------------------------------
-   05 — Neumorph Soft (distinct soft UI)
-   Pattern: inset + raised
---------------------------------------------------------- */
+/* -------------------------
+   05 — Neumorph Soft
+-------------------------- */
 .mentorai-bc--preset-05-steps{
   --bc-gap: 12px;
   padding: 12px 14px;
@@ -215,10 +278,9 @@
   opacity: 1;
 }
 
-/* ---------------------------------------------------------
-   06 — Glass Frost (real frosted panel)
-   Pattern: blur + highlight border
---------------------------------------------------------- */
+/* -------------------------
+   06 — Glass Frost
+-------------------------- */
 .mentorai-bc--preset-06-steps-check{
   padding: 12px 14px;
   border-radius: 18px;
@@ -237,10 +299,9 @@
   font-weight: 900;
 }
 
-/* ---------------------------------------------------------
-   07 — Terminal / Mono (developer UI)
-   Pattern: monospace + bracket separators
---------------------------------------------------------- */
+/* -------------------------
+   07 — Terminal / Mono
+-------------------------- */
 .mentorai-bc--preset-07-dots{
   padding: 10px 12px;
   border-radius: 12px;
@@ -269,10 +330,9 @@
   font-weight: 800;
 }
 
-/* ---------------------------------------------------------
-   08 — Tag Trail (tags + tiny dot separators)
-   Pattern: tag items + dot separators
---------------------------------------------------------- */
+/* -------------------------
+   08 — Tag Trail
+-------------------------- */
 .mentorai-bc--preset-08-tabs{
   padding: 0;
   background: transparent;
@@ -306,10 +366,9 @@
   opacity: 1;
 }
 
-/* ---------------------------------------------------------
-   09 — Timeline Steps (true progress)
-   Pattern: nodes + connecting line (no icon separators)
---------------------------------------------------------- */
+/* -------------------------
+   09 — Timeline Steps (nodes + connecting line)
+-------------------------- */
 .mentorai-bc--preset-09-tabs-active{
   padding: 14px 16px;
   border-radius: 18px;
@@ -335,7 +394,7 @@
 }
 .mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{
   opacity: 1;
-  width: 60px;
+  width: clamp(18px, 7vw, 60px);
   height: 2px;
   background: rgba(67,61,139,.22);
   border-radius: 999px;
@@ -348,10 +407,9 @@
   font-weight: 950;
 }
 
-/* ---------------------------------------------------------
+/* -------------------------
    10 — Segmented Control (iOS style)
-   Pattern: segmented, separators hidden
---------------------------------------------------------- */
+-------------------------- */
 .mentorai-bc--preset-10-pill-arrow{
   padding: 8px;
   border-radius: 999px;
@@ -379,10 +437,8 @@
 }
 
 /* ===========================
-   CLASSIC 5 (also DISTINCT)
+   CLASSIC 5
    =========================== */
-
-/* Classic — Minimal (tiny, quiet, no surface) */
 .mentorai-bc--preset-minimal{
   padding: 0;
   background: transparent;
@@ -393,7 +449,6 @@
 .mentorai-bc--preset-minimal .mentorai-bc__sep{ opacity:.35; }
 .mentorai-bc--preset-minimal .mentorai-bc__current{ opacity:.60; }
 
-/* Classic — Pill (soft capsule container) */
 .mentorai-bc--preset-pill{
   padding: 10px 14px;
   border-radius: 999px;
@@ -406,7 +461,6 @@
   transform: translateY(-1px);
 }
 
-/* Classic — Underline (strong editorial underline only) */
 .mentorai-bc--preset-underline{
   padding: 0;
   background: transparent;
@@ -427,7 +481,6 @@
   opacity: 1;
 }
 
-/* Classic — Dark (clean dark, not neon) */
 .mentorai-bc--preset-dark{
   padding: 10px 14px;
   border-radius: 16px;
@@ -442,7 +495,6 @@
   font-weight: 900;
 }
 
-/* Classic — Glass (soft glass panel) */
 .mentorai-bc--preset-glass{
   padding: 12px 14px;
   border-radius: 18px;
@@ -454,18 +506,31 @@
 }
 
 /* --------------------------
-   Extra uniqueness helpers
+   Helpers alignment for dot/line separators
 -------------------------- */
-
-/* When a preset hides svg separators via pseudo content */
 .mentorai-bc--preset-07-dots .mentorai-bc__sep,
 .mentorai-bc--preset-08-tabs .mentorai-bc__sep,
 .mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{
   align-self: center;
 }
 
-/* Responsive */
+/* --------------------------
+   Responsive
+-------------------------- */
 @media (max-width: 767px){
-  .mentorai-bc__list{ gap: 10px; }
-  .mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{ width: 40px; }
+  .mentorai-bc{
+    --bc-gap: 8px;
+    --bc-pad-y: 8px;
+    --bc-pad-x: 10px;
+  }
+
+  .mentorai-bc__sep{ opacity: .5; }
+
+  /* reduce chip padding on mobile */
+  .mentorai-bc--preset-03-compact .mentorai-bc__link,
+  .mentorai-bc--preset-03-compact .mentorai-bc__current,
+  .mentorai-bc--preset-10-pill-arrow .mentorai-bc__link,
+  .mentorai-bc--preset-10-pill-arrow .mentorai-bc__current{
+    padding: 8px 10px;
+  }
 }

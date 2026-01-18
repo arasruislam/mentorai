@@ -59,13 +59,28 @@ final class Assets_Manager {
 		);
 	}
 
-  // Breadcrumb
-  public function register_frontend_styles(): void {
-	wp_register_style(
-		'mentorai-widget-breadcrumb',
-		MENTORAI_URL . 'assets/css/frontend/widget-breadcrumb.css',
-		[],
-		MENTORAI_VERSION
-	);
-}
+    // Breadcrumb
+    public function register_frontend_styles(): void {
+    wp_register_style(
+      'mentorai-widget-breadcrumb',
+      MENTORAI_URL . 'assets/css/frontend/widget-breadcrumb.css',
+      [],
+      MENTORAI_VERSION
+    );
+
+    wp_register_style(
+              'mentorai-button',
+              MENTORAI_URL . 'assets/css/frontend/mentorai-button.css',
+              [],
+              MENTORAI_VERSION
+    );
+
+    // Future Frontend CSS register/enqueue add here:
+    // wp_register_style(
+    //       'mentorai-button',
+    //       MENTORAI_URL . 'assets/css/frontend/mentorai-button.css',
+    //       [],
+    //       MENTORAI_VERSION
+    //   );
+  }
 }

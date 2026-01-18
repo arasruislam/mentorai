@@ -30,6 +30,13 @@ final class Widgets_Registry {
 			//   'controls' => MENTORAI_PATH . 'includes/widgets/xyz/controls.php',
 			//   'class' => '\Mentorai\Widgets\Xyz\Widget',
 			// ],
+      'mentorai-button' => [
+				'title'       => __( 'Button', 'mentorai' ),
+				'description' => __( 'Dynamic Button widget.', 'mentorai' ),
+				'file'        => MENTORAI_PATH . 'includes/widgets/button/widget.php',
+				'controls'    => MENTORAI_PATH . 'includes/widgets/button/controls.php',
+				'class'       => '\Mentorai\Widgets\button\Widget',
+			],
 		];
 	}
 }
