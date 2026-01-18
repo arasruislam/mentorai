@@ -1,66 +1,90 @@
 /* =========================================================
-   Mentorai Breadcrumb - Full Style (10 + Classic 5)
-   + Per-item icons support
-   + Responsive fixes (wrap-safe, no orphan separators)
+   Mentorai Breadcrumb - 15 Presets (USER-OVERRIDABLE)
+   RULES:
+   - Base applies surface using tokens: --bc-bg/--bc-border/--bc-shadow
+   - Presets set tokens + unique item-level patterns
+   - Elementor Background/Border/Shadow controls can override because
+     surface is token-based (and you have preset_surface disable option)
    ========================================================= */
 
 /* -------------------------
-   Base
+   Base (tokens + robust reset)
 -------------------------- */
 .mentorai-bc{
+  /* layout */
   --bc-gap: 12px;
   --bc-radius: 14px;
   --bc-pad-y: 0px;
   --bc-pad-x: 0px;
 
-  --bc-muted: rgba(0,0,0,.55);
-  --bc-border: rgba(0,0,0,.08);
+  /* surface tokens */
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
 
+  /* theme tokens */
   --bc-primary: #433D8B;
   --bc-primary-soft: rgba(67,61,139,.14);
 
+  /* item tokens (per-preset can override) */
+  --bc-item-radius: 10px;
+  --bc-item-pad-y: 4px;
+  --bc-item-pad-x: 8px;
+  --bc-item-bg: transparent;
+  --bc-item-border: transparent;
+  --bc-item-shadow: none;
+
+  --bc-current-radius: var(--bc-item-radius);
+  --bc-current-pad-y: var(--bc-item-pad-y);
+  --bc-current-pad-x: var(--bc-item-pad-x);
+  --bc-current-bg: transparent;
+  --bc-current-border: transparent;
+  --bc-current-shadow: none;
+
+  /* separator tokens */
+  --bc-sep-opacity: .55;
+  --bc-sep-bg: transparent;
+
   display:block;
+  max-width: 100%;
   padding: var(--bc-pad-y) var(--bc-pad-x);
   border-radius: var(--bc-radius);
 
-  /* prevents rare horizontal overflow */
-  max-width: 100%;
-  overflow: hidden;
+  background: var(--bc-bg);
+  border: 1px solid var(--bc-border);
+  box-shadow: var(--bc-shadow);
+
+  overflow: visible;
 }
 
+/* OL reset (fixes “1. Home” issue when styles not applied) */
 .mentorai-bc__list{
   display:flex;
   align-items:center;
   flex-wrap:wrap;
   gap: var(--bc-gap);
-  list-style:none;
-  margin:0;
-  padding:0;
+
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
   max-width: 100%;
 }
 
 .mentorai-bc__item,
 .mentorai-bc__sep{
-  list-style:none;
-  margin:0;
-  padding:0;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* keep item blocks stable on wrap */
 .mentorai-bc__item{
   display:inline-flex;
   align-items:center;
   max-width: 100%;
 }
 
-.mentorai-bc__link{
-  text-decoration:none;
-  transition: color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease, opacity .18s ease;
-  display:inline-flex;
-  align-items:center;
-  max-width: 100%;
-}
-
+.mentorai-bc__link,
 .mentorai-bc__nolink,
 .mentorai-bc__current{
   display:inline-flex;
@@ -68,7 +92,34 @@
   max-width: 100%;
 }
 
+/* text + transitions */
+.mentorai-bc__link{
+  text-decoration:none;
+  transition: color .18s ease, background .18s ease, transform .18s ease,
+              box-shadow .18s ease, opacity .18s ease, border-color .18s ease, filter .18s ease;
+}
+
+/* item surface application */
+.mentorai-bc__link{
+  padding: var(--bc-item-pad-y) var(--bc-item-pad-x);
+  border-radius: var(--bc-item-radius);
+  background: var(--bc-item-bg);
+  border: 1px solid var(--bc-item-border);
+  box-shadow: var(--bc-item-shadow);
+}
+
+.mentorai-bc__nolink{
+  padding: var(--bc-item-pad-y) var(--bc-item-pad-x);
+  border-radius: var(--bc-item-radius);
+}
+
 .mentorai-bc__current{
+  padding: var(--bc-current-pad-y) var(--bc-current-pad-x);
+  border-radius: var(--bc-current-radius);
+  background: var(--bc-current-bg);
+  border: 1px solid var(--bc-current-border);
+  box-shadow: var(--bc-current-shadow);
+
   font-weight: 650;
   opacity: .85;
 }
@@ -78,25 +129,22 @@
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  opacity:.55;
+  opacity: var(--bc-sep-opacity);
   line-height:1;
+  background: var(--bc-sep-bg);
+  border-radius: 999px;
 }
 
-/* Ensure separator SVG scales with font-size (your separator size control sets font-size here) */
+/* Separator SVG scales with font-size (Elementor sets font-size on .mentorai-bc__sep) */
 .mentorai-bc__sep svg{ width:1em; height:1em; display:block; }
 .mentorai-bc__sep svg,
-.mentorai-bc__sep svg *{
-  fill: currentColor;
-  stroke: currentColor;
-}
+.mentorai-bc__sep svg *{ fill: currentColor; stroke: currentColor; }
 
-/* -------------------------
-   Item Icon core
--------------------------- */
+/* Item icons core */
 .mentorai-bc__label{
   display:inline-flex;
   align-items:center;
-  gap: 8px; /* overridden by Elementor control */
+  gap: 8px;
   max-width: 100%;
 }
 
@@ -105,283 +153,352 @@
   align-items:center;
   justify-content:center;
   line-height: 1;
-  font-size: 1em; /* overridden by Elementor control */
+  font-size: 1em;
   flex: 0 0 auto;
 }
 
-.mentorai-bc__item-icon svg{
-  width: 1em;
-  height: 1em;
-  display:block;
-}
+.mentorai-bc__item-icon svg{ width:1em; height:1em; display:block; }
+.mentorai-bc__item-icon i{ line-height:1; }
 
-.mentorai-bc__item-icon i{
-  line-height: 1;
-}
-
-/* text wrapping */
 .mentorai-bc__text{
   min-width: 0;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* icon after */
-.mentorai-bc--icon-after .mentorai-bc__label{
-  flex-direction: row;
+/* =========================================================
+   Preset Surface Toggle
+   ========================================================= */
+.mentorai-bc--no-preset-surface{
+  --bc-bg: transparent !important;
+  --bc-border: transparent !important;
+  --bc-shadow: none !important;
 }
 
-/* current icon targeting */
-.mentorai-bc__current .mentorai-bc__item-icon{ opacity: 1; }
+/* =========================================================
+   01 — Ant Design Breadcrumb (clean, no container, subtle hover)
+   Class: mentorai-bc--preset-ant-breadcrumb
+   ========================================================= */
+.mentorai-bc--preset-ant-breadcrumb{
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
 
-/* -------------------------
-   01 — Ant Design Classic Breadcrumb (no container)
--------------------------- */
-.mentorai-bc--preset-01-chevron{
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
   --bc-gap: 10px;
+  --bc-pad-y: 0px;
+  --bc-pad-x: 0px;
+
+  --bc-item-radius: 6px;
+  --bc-item-pad-y: 2px;
+  --bc-item-pad-x: 6px;
+  --bc-item-bg: transparent;
+  --bc-item-border: transparent;
+
+  --bc-current-bg: transparent;
+  --bc-current-border: transparent;
+  --bc-current-shadow: none;
+
+  --bc-sep-opacity: .35;
 }
-.mentorai-bc--preset-01-chevron .mentorai-bc__link{
-  padding: 2px 6px;
-  border-radius: 6px;
-}
-.mentorai-bc--preset-01-chevron .mentorai-bc__link:hover{
-  background: rgba(0,0,0,.05);
+.mentorai-bc--preset-ant-breadcrumb .mentorai-bc__link:hover{
+  background: rgba(0,0,0,.06);
   color: var(--bc-primary);
 }
-.mentorai-bc--preset-01-chevron .mentorai-bc__current{
+.mentorai-bc--preset-ant-breadcrumb .mentorai-bc__current{
   opacity: .65;
   font-weight: 600;
 }
 
-/* -------------------------
-   02 — Shadcn Ghost
--------------------------- */
-.mentorai-bc--preset-02-icons{
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
+/* =========================================================
+   02 — Shadcn Ghost (neutral, minimal, text UI)
+   Class: mentorai-bc--preset-shadcn-ghost
+   ========================================================= */
+.mentorai-bc--preset-shadcn-ghost{
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
+
   --bc-gap: 12px;
+  --bc-item-radius: 0px;
+  --bc-item-pad-y: 0px;
+  --bc-item-pad-x: 0px;
+  --bc-item-bg: transparent;
+  --bc-item-border: transparent;
+
+  --bc-sep-opacity: .25;
 }
-.mentorai-bc--preset-02-icons .mentorai-bc__sep{ opacity:.35; }
-.mentorai-bc--preset-02-icons .mentorai-bc__link{
-  color: rgba(0,0,0,.70);
+.mentorai-bc--preset-shadcn-ghost .mentorai-bc__link{
+  color: rgba(0,0,0,.72);
 }
-.mentorai-bc--preset-02-icons .mentorai-bc__link:hover{
+.mentorai-bc--preset-shadcn-ghost .mentorai-bc__link:hover{
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.mentorai-bc--preset-02-icons .mentorai-bc__current{
-  color: rgba(0,0,0,.80);
-  font-weight: 700;
+.mentorai-bc--preset-shadcn-ghost .mentorai-bc__current{
   opacity: 1;
-}
-
-/* -------------------------
-   03 — Material Chips (no separators)
--------------------------- */
-.mentorai-bc--preset-03-compact{
-  padding: 8px;
-  background: rgba(0,0,0,.02);
-  border: 1px solid rgba(0,0,0,.06);
-  border-radius: 18px;
-  --bc-gap: 8px;
-}
-.mentorai-bc--preset-03-compact .mentorai-bc__sep{ display:none; }
-.mentorai-bc--preset-03-compact .mentorai-bc__link,
-.mentorai-bc--preset-03-compact .mentorai-bc__current{
-  display:inline-flex;
-  align-items:center;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,.08);
-  background: rgba(255,255,255,.7);
-}
-.mentorai-bc--preset-03-compact .mentorai-bc__link:hover{
-  border-color: rgba(67,61,139,.25);
-  background: rgba(67,61,139,.08);
-}
-.mentorai-bc--preset-03-compact .mentorai-bc__current{
-  background: var(--bc-primary);
-  border-color: var(--bc-primary);
-  color: #fff;
   font-weight: 800;
-  opacity: 1;
+  color: rgba(0,0,0,.86);
 }
 
-/* -------------------------
-   04 — Shadcn Underline Animated
--------------------------- */
-.mentorai-bc--preset-04-slash{
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
+/* =========================================================
+   03 — Material Chips (chip items, no separators)
+   Class: mentorai-bc--preset-material-chips
+   ========================================================= */
+.mentorai-bc--preset-material-chips{
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
+
+  --bc-gap: 8px;
+
+  --bc-item-radius: 999px;
+  --bc-item-pad-y: 6px;
+  --bc-item-pad-x: 12px;
+  --bc-item-bg: rgba(0,0,0,.03);
+  --bc-item-border: rgba(0,0,0,.10);
+
+  --bc-current-bg: var(--bc-primary);
+  --bc-current-border: var(--bc-primary);
+  --bc-current-shadow: 0 10px 20px rgba(23,21,59,.12);
+  --bc-current-radius: 999px;
+}
+.mentorai-bc--preset-material-chips .mentorai-bc__sep{ display:none; }
+.mentorai-bc--preset-material-chips .mentorai-bc__link:hover{
+  background: rgba(67,61,139,.10);
+  border-color: rgba(67,61,139,.22);
+  transform: translateY(-1px);
+}
+.mentorai-bc--preset-material-chips .mentorai-bc__current{
+  color:#fff;
+  opacity:1;
+  font-weight: 850;
+}
+
+/* =========================================================
+   04 — Shadcn Underline (animated underline)
+   Class: mentorai-bc--preset-shadcn-underline
+   ========================================================= */
+.mentorai-bc--preset-shadcn-underline{
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
+
   --bc-gap: 14px;
+
+  --bc-item-radius: 0px;
+  --bc-item-pad-y: 0px;
+  --bc-item-pad-x: 0px;
+
+  --bc-sep-opacity: .25;
 }
-.mentorai-bc--preset-04-slash .mentorai-bc__sep{ opacity:.35; }
-.mentorai-bc--preset-04-slash .mentorai-bc__link{
+.mentorai-bc--preset-shadcn-underline .mentorai-bc__link{
   position: relative;
-  padding-bottom: 2px;
-  color: rgba(0,0,0,.75);
+  color: rgba(0,0,0,.74);
 }
-.mentorai-bc--preset-04-slash .mentorai-bc__link::after{
+.mentorai-bc--preset-shadcn-underline .mentorai-bc__link::after{
   content:"";
   position:absolute;
   left:0;
-  bottom:-1px;
+  bottom:-2px;
   width:100%;
   height:2px;
   background: currentColor;
-  opacity:.85;
+  opacity:.9;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform .2s ease;
+  transition: transform .22s ease;
 }
-.mentorai-bc--preset-04-slash .mentorai-bc__link:hover::after{
-  transform: scaleX(1);
-}
-.mentorai-bc--preset-04-slash .mentorai-bc__current{
-  font-weight: 900;
+.mentorai-bc--preset-shadcn-underline .mentorai-bc__link:hover::after{ transform: scaleX(1); }
+.mentorai-bc--preset-shadcn-underline .mentorai-bc__current{
   opacity: 1;
+  font-weight: 950;
 }
 
-/* -------------------------
-   05 — Neumorph Soft
--------------------------- */
-.mentorai-bc--preset-05-steps{
+/* =========================================================
+   05 — Neumorph Soft (soft elevation)
+   Class: mentorai-bc--preset-neumorph-soft
+   ========================================================= */
+.mentorai-bc--preset-neumorph-soft{
+  --bc-bg: #f6f7ff;
+  --bc-border: rgba(67,61,139,.10);
+  --bc-shadow:
+    12px 12px 28px rgba(23,21,59,.08),
+    -12px -12px 28px rgba(255,255,255,.95);
+
   --bc-gap: 12px;
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: #f5f6ff;
-  border: 1px solid rgba(67,61,139,.10);
-  box-shadow:
-    10px 10px 24px rgba(23,21,59,.08),
-    -10px -10px 24px rgba(255,255,255,.9);
-}
-.mentorai-bc--preset-05-steps .mentorai-bc__link{
-  padding: 6px 10px;
-  border-radius: 12px;
-}
-.mentorai-bc--preset-05-steps .mentorai-bc__link:hover{
-  box-shadow:
+  --bc-pad-y: 12px;
+  --bc-pad-x: 14px;
+  --bc-radius: 18px;
+
+  --bc-item-radius: 12px;
+  --bc-item-pad-y: 6px;
+  --bc-item-pad-x: 10px;
+
+  --bc-current-bg: rgba(67,61,139,.10);
+  --bc-current-border: rgba(67,61,139,.18);
+  --bc-current-shadow:
     inset 8px 8px 18px rgba(23,21,59,.08),
-    inset -8px -8px 18px rgba(255,255,255,.85);
+    inset -8px -8px 18px rgba(255,255,255,.9);
 }
-.mentorai-bc--preset-05-steps .mentorai-bc__current{
+.mentorai-bc--preset-neumorph-soft .mentorai-bc__link:hover{
+  box-shadow:
+    inset 8px 8px 18px rgba(23,21,59,.07),
+    inset -8px -8px 18px rgba(255,255,255,.9);
+}
+.mentorai-bc--preset-neumorph-soft .mentorai-bc__current{
   color: var(--bc-primary);
-  font-weight: 900;
   opacity: 1;
+  font-weight: 900;
 }
 
-/* -------------------------
-   06 — Glass Frost
--------------------------- */
-.mentorai-bc--preset-06-steps-check{
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(200,172,214,.12);
-  border: 1px solid rgba(255,255,255,.45);
-  box-shadow: 0 18px 44px rgba(23,21,59,.12);
+/* =========================================================
+   06 — Glass Frost (real frosted glass)
+   Class: mentorai-bc--preset-glass-frost
+   ========================================================= */
+.mentorai-bc--preset-glass-frost{
+  --bc-bg: rgba(200,172,214,.10);
+  --bc-border: rgba(255,255,255,.40);
+  --bc-shadow: 0 18px 44px rgba(23,21,59,.14);
+
+  --bc-gap: 12px;
+  --bc-pad-y: 12px;
+  --bc-pad-x: 14px;
+  --bc-radius: 18px;
+
+  --bc-item-radius: 12px;
+  --bc-item-pad-y: 6px;
+  --bc-item-pad-x: 10px;
+  --bc-item-bg: rgba(255,255,255,.16);
+  --bc-item-border: rgba(255,255,255,.24);
+
+  --bc-current-bg: rgba(255,255,255,.28);
+  --bc-current-border: rgba(255,255,255,.34);
+  --bc-current-shadow: 0 10px 28px rgba(23,21,59,.12);
+
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
-.mentorai-bc--preset-06-steps-check .mentorai-bc__sep{ opacity:.45; }
-.mentorai-bc--preset-06-steps-check .mentorai-bc__link:hover{
+.mentorai-bc--preset-glass-frost .mentorai-bc__link:hover{
   transform: translateY(-1px);
+  background: rgba(255,255,255,.24);
 }
-.mentorai-bc--preset-06-steps-check .mentorai-bc__current{
+.mentorai-bc--preset-glass-frost .mentorai-bc__current{
   opacity: 1;
-  font-weight: 900;
+  font-weight: 950;
 }
 
-/* -------------------------
-   07 — Terminal / Mono
--------------------------- */
-.mentorai-bc--preset-07-dots{
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #0f1220;
-  border: 1px solid rgba(255,255,255,.10);
-  color: rgba(255,255,255,.82);
+/* =========================================================
+   07 — Terminal / Mono (monospace + bracket separators)
+   Class: mentorai-bc--preset-terminal-mono
+   ========================================================= */
+.mentorai-bc--preset-terminal-mono{
+  --bc-bg: #0f1220;
+  --bc-border: rgba(255,255,255,.10);
+  --bc-shadow: none;
+
   --bc-gap: 10px;
+  --bc-pad-y: 10px;
+  --bc-pad-x: 12px;
+  --bc-radius: 12px;
+
+  --bc-item-radius: 8px;
+  --bc-item-pad-y: 2px;
+  --bc-item-pad-x: 6px;
+  --bc-item-bg: rgba(255,255,255,.04);
+  --bc-item-border: rgba(255,255,255,.08);
+
+  --bc-current-bg: rgba(200,172,214,.14);
+  --bc-current-border: rgba(200,172,214,.22);
+  --bc-current-shadow: none;
+
+  --bc-sep-opacity: 1;
+  color: rgba(255,255,255,.84);
 }
-.mentorai-bc--preset-07-dots .mentorai-bc__link{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+.mentorai-bc--preset-terminal-mono .mentorai-bc__link{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
   color: rgba(255,255,255,.82);
 }
-.mentorai-bc--preset-07-dots .mentorai-bc__sep{
-  opacity: 1;
-  color: rgba(200,172,214,.75);
+.mentorai-bc--preset-terminal-mono .mentorai-bc__sep{
+  color: rgba(200,172,214,.70);
 }
-.mentorai-bc--preset-07-dots .mentorai-bc__sep::before{
-  content: "›";
-  font-size: 14px;
+.mentorai-bc--preset-terminal-mono .mentorai-bc__sep::before{
+  content: " ] [ ";
+  white-space: pre;
+  font-size: 12px;
   line-height: 1;
 }
-.mentorai-bc--preset-07-dots .mentorai-bc__sep svg{ display:none; }
-.mentorai-bc--preset-07-dots .mentorai-bc__current{
+.mentorai-bc--preset-terminal-mono .mentorai-bc__sep svg{ display:none; }
+.mentorai-bc--preset-terminal-mono .mentorai-bc__current{
   color: #fff;
   opacity: 1;
-  font-weight: 800;
+  font-weight: 900;
 }
 
-/* -------------------------
-   08 — Tag Trail
--------------------------- */
-.mentorai-bc--preset-08-tabs{
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
+/* =========================================================
+   08 — Tag Trail (tag items + dot divider)
+   Class: mentorai-bc--preset-tag-trail
+   ========================================================= */
+.mentorai-bc--preset-tag-trail{
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
+
   --bc-gap: 10px;
+
+  --bc-item-radius: 10px;
+  --bc-item-pad-y: 6px;
+  --bc-item-pad-x: 10px;
+  --bc-item-bg: rgba(0,0,0,.04);
+  --bc-item-border: rgba(0,0,0,.06);
+
+  --bc-current-bg: rgba(67,61,139,.12);
+  --bc-current-border: rgba(67,61,139,.18);
+  --bc-current-shadow: none;
+
+  --bc-sep-opacity: 1;
 }
-.mentorai-bc--preset-08-tabs .mentorai-bc__link,
-.mentorai-bc--preset-08-tabs .mentorai-bc__current{
-  display:inline-flex;
-  align-items:center;
-  padding: 6px 10px;
-  border-radius: 10px;
-  background: rgba(0,0,0,.04);
-  border: 1px solid rgba(0,0,0,.06);
-}
-.mentorai-bc--preset-08-tabs .mentorai-bc__sep{
-  opacity: 1;
+.mentorai-bc--preset-tag-trail .mentorai-bc__sep{
   width: 6px;
   height: 6px;
-  border-radius: 999px;
-  background: rgba(0,0,0,.25);
+  background: rgba(0,0,0,.30);
   font-size: 0;
 }
-.mentorai-bc--preset-08-tabs .mentorai-bc__sep svg{ display:none; }
-.mentorai-bc--preset-08-tabs .mentorai-bc__current{
-  background: rgba(67,61,139,.14);
-  border-color: rgba(67,61,139,.18);
+.mentorai-bc--preset-tag-trail .mentorai-bc__sep svg{ display:none; }
+.mentorai-bc--preset-tag-trail .mentorai-bc__link:hover{
+  background: rgba(0,0,0,.06);
+}
+.mentorai-bc--preset-tag-trail .mentorai-bc__current{
   color: var(--bc-primary);
-  font-weight: 900;
   opacity: 1;
+  font-weight: 900;
 }
 
-/* -------------------------
-   09 — Timeline Steps (nodes + connecting line)
--------------------------- */
-.mentorai-bc--preset-09-tabs-active{
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: rgba(0,0,0,.02);
-  border: 1px solid rgba(0,0,0,.06);
+/* =========================================================
+   09 — Timeline Steps (nodes + connector line)
+   Class: mentorai-bc--preset-timeline-steps
+   ========================================================= */
+.mentorai-bc--preset-timeline-steps{
+  --bc-bg: rgba(0,0,0,.02);
+  --bc-border: rgba(0,0,0,.06);
+  --bc-shadow: none;
+
   --bc-gap: 18px;
+  --bc-pad-y: 14px;
+  --bc-pad-x: 16px;
+  --bc-radius: 18px;
+
+  --bc-item-radius: 0px;
+  --bc-item-pad-y: 0px;
+  --bc-item-pad-x: 0px;
+
+  --bc-sep-opacity: 1;
 }
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__item{
+.mentorai-bc--preset-timeline-steps .mentorai-bc__item{
   position: relative;
   padding-left: 18px;
   font-weight: 650;
 }
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__item::before{
+.mentorai-bc--preset-timeline-steps .mentorai-bc__item::before{
   content:"";
   position:absolute;
   left:0;
@@ -390,147 +507,246 @@
   height: 12px;
   transform: translateY(-50%);
   border-radius: 999px;
-  background: rgba(67,61,139,.45);
+  background: rgba(67,61,139,.50);
 }
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{
-  opacity: 1;
+.mentorai-bc--preset-timeline-steps .mentorai-bc__sep{
   width: clamp(18px, 7vw, 60px);
   height: 2px;
-  background: rgba(67,61,139,.22);
+  background: rgba(67,61,139,.24);
   border-radius: 999px;
   font-size: 0;
 }
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__sep svg{ display:none; }
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__current{
+.mentorai-bc--preset-timeline-steps .mentorai-bc__sep svg{ display:none; }
+.mentorai-bc--preset-timeline-steps .mentorai-bc__current{
   color: var(--bc-primary);
   opacity: 1;
   font-weight: 950;
 }
 
-/* -------------------------
-   10 — Segmented Control (iOS style)
--------------------------- */
-.mentorai-bc--preset-10-pill-arrow{
-  padding: 8px;
-  border-radius: 999px;
-  background: rgba(0,0,0,.04);
-  border: 1px solid rgba(0,0,0,.06);
+/* =========================================================
+   10 — Segmented Control (iOS-like)
+   Class: mentorai-bc--preset-segmented
+   ========================================================= */
+.mentorai-bc--preset-segmented{
+  --bc-bg: rgba(0,0,0,.04);
+  --bc-border: rgba(0,0,0,.06);
+  --bc-shadow: none;
+
   --bc-gap: 6px;
+  --bc-pad-y: 8px;
+  --bc-pad-x: 8px;
+  --bc-radius: 999px;
+
+  --bc-item-radius: 999px;
+  --bc-item-pad-y: 10px;
+  --bc-item-pad-x: 14px;
+  --bc-item-bg: transparent;
+  --bc-item-border: transparent;
+
+  --bc-current-bg: #ffffff;
+  --bc-current-border: rgba(0,0,0,.06);
+  --bc-current-shadow: 0 10px 24px rgba(23,21,59,.10);
+  --bc-current-radius: 999px;
 }
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__sep{ display:none; }
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__link,
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__current{
-  padding: 10px 14px;
-  border-radius: 999px;
-  display:inline-flex;
-  align-items:center;
+.mentorai-bc--preset-segmented .mentorai-bc__sep{ display:none; }
+.mentorai-bc--preset-segmented .mentorai-bc__link:hover{
+  background: rgba(255,255,255,.70);
 }
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__link:hover{
-  background: rgba(255,255,255,.7);
-}
-.mentorai-bc--preset-10-pill-arrow .mentorai-bc__current{
-  background: #fff;
-  box-shadow: 0 10px 24px rgba(23,21,59,.10);
+.mentorai-bc--preset-segmented .mentorai-bc__current{
   color: var(--bc-primary);
   opacity: 1;
   font-weight: 950;
 }
 
-/* ===========================
-   CLASSIC 5
-   =========================== */
-.mentorai-bc--preset-minimal{
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  --bc-gap: 8px;
-}
-.mentorai-bc--preset-minimal .mentorai-bc__sep{ opacity:.35; }
-.mentorai-bc--preset-minimal .mentorai-bc__current{ opacity:.60; }
+/* =========================================================
+   11 — Ant “Current Pill” (only current is pill)
+   Class: mentorai-bc--preset-current-pill
+   ========================================================= */
+.mentorai-bc--preset-current-pill{
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
 
-.mentorai-bc--preset-pill{
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: rgba(200,172,214,.14);
-  border: 1px solid rgba(67,61,139,.18);
-  box-shadow: 0 10px 22px rgba(23,21,59,.08);
-  --bc-gap: 12px;
-}
-.mentorai-bc--preset-pill .mentorai-bc__link:hover{
-  transform: translateY(-1px);
-}
+  --bc-gap: 10px;
 
-.mentorai-bc--preset-underline{
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  --bc-gap: 14px;
-}
-.mentorai-bc--preset-underline .mentorai-bc__sep{ opacity:.25; }
-.mentorai-bc--preset-underline .mentorai-bc__link{
-  border-bottom: 2px solid transparent;
-  padding-bottom: 2px;
-}
-.mentorai-bc--preset-underline .mentorai-bc__link:hover{
-  border-bottom-color: currentColor;
-}
-.mentorai-bc--preset-underline .mentorai-bc__current{
-  font-weight: 950;
-  opacity: 1;
-}
+  --bc-item-radius: 6px;
+  --bc-item-pad-y: 2px;
+  --bc-item-pad-x: 6px;
 
-.mentorai-bc--preset-dark{
-  padding: 10px 14px;
-  border-radius: 16px;
-  background: #17153B;
-  border: 1px solid rgba(200,172,214,.12);
-  color: rgba(200,172,214,.92);
-  --bc-gap: 12px;
+  --bc-current-bg: rgba(67,61,139,.12);
+  --bc-current-border: rgba(67,61,139,.18);
+  --bc-current-shadow: none;
+  --bc-current-radius: 999px;
+  --bc-current-pad-y: 6px;
+  --bc-current-pad-x: 12px;
+
+  --bc-sep-opacity: .35;
 }
-.mentorai-bc--preset-dark .mentorai-bc__current{
-  color: #fff;
+.mentorai-bc--preset-current-pill .mentorai-bc__link:hover{
+  background: rgba(0,0,0,.06);
+  color: var(--bc-primary);
+}
+.mentorai-bc--preset-current-pill .mentorai-bc__current{
+  color: var(--bc-primary);
   opacity: 1;
   font-weight: 900;
 }
 
-.mentorai-bc--preset-glass{
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.35);
-  box-shadow: 0 18px 44px rgba(23,21,59,.14);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+/* =========================================================
+   12 — Gradient Active (current glows)
+   Class: mentorai-bc--preset-gradient-active
+   ========================================================= */
+.mentorai-bc--preset-gradient-active{
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
+
+  --bc-gap: 12px;
+
+  --bc-item-radius: 10px;
+  --bc-item-pad-y: 4px;
+  --bc-item-pad-x: 8px;
+
+  --bc-sep-opacity: .30;
+
+  --bc-current-bg: transparent;
+  --bc-current-border: transparent;
+  --bc-current-shadow: 0 18px 40px rgba(67,61,139,.22);
+  --bc-current-radius: 999px;
+  --bc-current-pad-y: 8px;
+  --bc-current-pad-x: 14px;
+}
+.mentorai-bc--preset-gradient-active .mentorai-bc__current{
+  opacity: 1;
+  font-weight: 950;
+  color: #fff;
+  background: linear-gradient(135deg, #433D8B 0%, #C8ACD6 100%);
+}
+.mentorai-bc--preset-gradient-active .mentorai-bc__link{
+  color: rgba(0,0,0,.72);
+}
+.mentorai-bc--preset-gradient-active .mentorai-bc__link:hover{
+  color: var(--bc-primary);
+  transform: translateY(-1px);
 }
 
-/* --------------------------
-   Helpers alignment for dot/line separators
--------------------------- */
-.mentorai-bc--preset-07-dots .mentorai-bc__sep,
-.mentorai-bc--preset-08-tabs .mentorai-bc__sep,
-.mentorai-bc--preset-09-tabs-active .mentorai-bc__sep{
-  align-self: center;
+/* =========================================================
+   13 — Minimal Uppercase (small caps + tracking)
+   Class: mentorai-bc--preset-minimal-uppercase
+   ========================================================= */
+.mentorai-bc--preset-minimal-uppercase{
+  --bc-bg: transparent;
+  --bc-border: transparent;
+  --bc-shadow: none;
+
+  --bc-gap: 12px;
+
+  --bc-item-radius: 0px;
+  --bc-item-pad-y: 0px;
+  --bc-item-pad-x: 0px;
+
+  --bc-sep-opacity: .25;
+}
+.mentorai-bc--preset-minimal-uppercase .mentorai-bc__link,
+.mentorai-bc--preset-minimal-uppercase .mentorai-bc__current{
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 12px;
+}
+.mentorai-bc--preset-minimal-uppercase .mentorai-bc__current{
+  opacity: 1;
+  font-weight: 900;
 }
 
-/* --------------------------
-   Responsive
--------------------------- */
+/* =========================================================
+   14 — Breadcrumb Bar (full-width bar style)
+   Class: mentorai-bc--preset-breadcrumb-bar
+   ========================================================= */
+.mentorai-bc--preset-breadcrumb-bar{
+  --bc-bg: rgba(0,0,0,.03);
+  --bc-border: rgba(0,0,0,.06);
+  --bc-shadow: none;
+
+  --bc-gap: 10px;
+  --bc-pad-y: 12px;
+  --bc-pad-x: 14px;
+  --bc-radius: 12px;
+
+  --bc-item-radius: 10px;
+  --bc-item-pad-y: 6px;
+  --bc-item-pad-x: 10px;
+
+  --bc-current-bg: rgba(67,61,139,.12);
+  --bc-current-border: rgba(67,61,139,.18);
+  --bc-current-shadow: none;
+
+  --bc-sep-opacity: .25;
+}
+.mentorai-bc--preset-breadcrumb-bar .mentorai-bc__list{
+  justify-content: space-between;
+}
+.mentorai-bc--preset-breadcrumb-bar .mentorai-bc__link:hover{
+  background: rgba(0,0,0,.05);
+}
+.mentorai-bc--preset-breadcrumb-bar .mentorai-bc__current{
+  color: var(--bc-primary);
+  opacity: 1;
+  font-weight: 950;
+}
+
+/* =========================================================
+   15 — Dark Neon (distinct dark + glow separators)
+   Class: mentorai-bc--preset-dark-neon
+   ========================================================= */
+.mentorai-bc--preset-dark-neon{
+  --bc-bg: #0b0f1a;
+  --bc-border: rgba(200,172,214,.16);
+  --bc-shadow: 0 18px 50px rgba(0,0,0,.40);
+
+  --bc-gap: 12px;
+  --bc-pad-y: 12px;
+  --bc-pad-x: 14px;
+  --bc-radius: 16px;
+
+  --bc-item-radius: 10px;
+  --bc-item-pad-y: 4px;
+  --bc-item-pad-x: 8px;
+  --bc-item-bg: rgba(255,255,255,.04);
+  --bc-item-border: rgba(255,255,255,.08);
+
+  --bc-current-bg: rgba(67,61,139,.30);
+  --bc-current-border: rgba(200,172,214,.22);
+  --bc-current-shadow: 0 0 0 1px rgba(200,172,214,.16), 0 12px 30px rgba(67,61,139,.22);
+
+  --bc-sep-opacity: 1;
+
+  color: rgba(255,255,255,.86);
+}
+.mentorai-bc--preset-dark-neon .mentorai-bc__link{ color: rgba(255,255,255,.78); }
+.mentorai-bc--preset-dark-neon .mentorai-bc__link:hover{
+  color: #fff;
+  transform: translateY(-1px);
+}
+.mentorai-bc--preset-dark-neon .mentorai-bc__sep{
+  color: #C8ACD6;
+  text-shadow: 0 0 12px rgba(200,172,214,.55);
+}
+.mentorai-bc--preset-dark-neon .mentorai-bc__current{
+  color:#fff;
+  opacity:1;
+  font-weight: 950;
+}
+
+/* Responsive */
 @media (max-width: 767px){
-  .mentorai-bc{
-    --bc-gap: 8px;
-    --bc-pad-y: 8px;
-    --bc-pad-x: 10px;
+  .mentorai-bc{ --bc-gap: 8px; }
+
+  .mentorai-bc--preset-segmented{
+    --bc-item-pad-y: 8px;
+    --bc-item-pad-x: 10px;
   }
 
-  .mentorai-bc__sep{ opacity: .5; }
-
-  /* reduce chip padding on mobile */
-  .mentorai-bc--preset-03-compact .mentorai-bc__link,
-  .mentorai-bc--preset-03-compact .mentorai-bc__current,
-  .mentorai-bc--preset-10-pill-arrow .mentorai-bc__link,
-  .mentorai-bc--preset-10-pill-arrow .mentorai-bc__current{
-    padding: 8px 10px;
+  .mentorai-bc--preset-timeline-steps .mentorai-bc__sep{
+    width: clamp(14px, 7vw, 40px);
   }
 }
