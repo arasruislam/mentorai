@@ -69,10 +69,10 @@ final class Assets_Manager {
     );
 
     wp_register_style(
-              'mentorai-button',
-              MENTORAI_URL . 'assets/css/frontend/mentorai-button.css',
-              [],
-              MENTORAI_VERSION
+      'mentorai-button',
+      MENTORAI_URL . 'assets/css/frontend/mentorai-button.css',
+      [],
+      MENTORAI_VERSION
     );
 
     // Future Frontend CSS register/enqueue add here:

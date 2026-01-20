@@ -35,7 +35,7 @@ final class Widgets_Registry {
 				'description' => __( 'Dynamic Button widget.', 'mentorai' ),
 				'file'        => MENTORAI_PATH . 'includes/widgets/button/widget.php',
 				'controls'    => MENTORAI_PATH . 'includes/widgets/button/controls.php',
-				'class'       => '\Mentorai\Widgets\button\Widget',
+				'class'       => '\Mentorai\Widgets\Button\Widget',
 			],
 		];
 	}
